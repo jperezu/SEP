@@ -1,0 +1,127 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+{%if event_requests %}
+<table>
+	<tr>
+		<th> Client </th>
+		<th> Type </th>
+		<th> Attendees </th>
+		<th> Budget </th>
+		<th> Dates </th>
+		<th> Description </th>
+	</tr>
+{% for event in event_requests %}
+	<tr>
+		<th>{{ event.client }}</th>
+		<th>{{ event.event_type }}</th>
+		<th>{{ event.attendees }}</th>
+		<th>{{ event.expected_budget }} €</th>
+		<th>{{ event.from_date.month}}/{{event.from_date.day}}/{{event.from_date.year }} - 
+			{{ event.to_date.month}}/{{event.to_date.day}}/{{event.to_date.year }} </th>
+		<th>{{ event.description }}</th>
+	<th><form method="post" action="{% url 'event_cs_accept' %}">
+	{% csrf_token %}
+	<button type="submit" name = "request_pk" value="{{ event.pk }}">Accept</button>
+	</form></th>
+	<th><form method="post" action="{% url 'event_reject' %}">
+	{% csrf_token %}
+	<button type="submit" name = "request_pk" value="{{ event.pk }}">Reject</button>
+	</form></th>
+	</tr>
+{% endfor %}
+</table>
+
+{%elif event_cs_requests %}
+<table>
+	<tr>
+		<th> Client </th>
+		<th> Type </th>
+		<th> Budget </th>
+		<th> Description </th>
+	</tr>
+{% for event in event_cs_requests %}
+	<tr>
+		<th>{{ event.client }}</th>
+		<th>{{ event.event_type }}</th>
+		<th>{{ event.expected_budget }} €</th>
+		<th>{{ event.description }}</th>
+	<th><form method="post" action="{% url 'event_financial_accept' %}">
+	{% csrf_token %}
+	<button type="submit" name = "request_pk" value="{{ event.pk }}">Accept</button>
+	</form></th>
+	<th><form method="post" action="{% url 'event_reject' %}">
+	{% csrf_token %}
+	<button type="submit" name = "request_pk" value="{{ event.pk }}">Reject</button>
+	</form></th>
+	</tr>
+{% endfor %}
+</table>
+
+{%elif event_fin_requests%}
+<table>
+	<tr>
+		<th> Client </th>
+		<th> Type </th>
+		<th> Attendees </th>
+		<th> Budget </th>
+		<th> Dates </th>
+		<th> Description </th>
+	</tr>
+{% for event in event_fin_requests %}
+	<tr>
+		<th>{{ event.client }}</th>
+		<th>{{ event.event_type }}</th>
+		<th>{{ event.attendees }}</th>
+		<th>{{ event.expected_budget }} €</th>
+		<th>{{ event.from_date.month}}/{{event.from_date.day}}/{{event.from_date.year }} - 
+			{{ event.to_date.month}}/{{event.to_date.day}}/{{event.to_date.year }} </th>
+		<th>{{ event.description }}</th>
+	<th><form method="post" action="{% url 'event_admin_accept' %}">
+	{% csrf_token %}
+	<button type="submit" name = "request_pk" value="{{ event.pk }}">Accept</button>
+	</form></th>
+	<th><form method="post" action="{% url 'event_reject' %}">
+	{% csrf_token %}
+	<button type="submit" name = "request_pk" value="{{ event.pk }}">Reject</button>
+	</form></th>
+	</tr>
+{% endfor %}
+</table>
+
+{%else %}
+<p> No event requests to show </p>
+{%endif %}
+
+{%if accepted_events %}
+<h2>Accepted requests</h2>
+<table>
+{% for event in accepted_events %}
+	<tr>
+		<th>{{ event.client }}'s {{ event.event_type }}</th>
+	<th><form method="post" action="{% url 'create_event' %}">
+	{% csrf_token %}
+	<button type="submit" name = "request_pk" value="{{ event.pk }}">Create Event</button>
+	</form></th>
+	</tr>
+{% endfor %}
+</table>
+{%endif %}
+
+{%if rejected_events %}
+<h2>Rejected requests</h2>
+<table>
+{% for event in rejected_events %}
+	<tr>
+		<th>{{ event.client }}'s {{ event.event_type }}</th>
+	<th><form method="post" action="{% url 'remove_request' %}">
+	{% csrf_token %}
+	<button type="submit" name = "request_pk" value="{{ event.pk }}">Remove Request</button>
+	</form></th>
+	</tr>
+{% endfor %}
+</table>
+{%endif %}
+
+{% endblock %}
