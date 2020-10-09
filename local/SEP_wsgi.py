@@ -1,1 +1,1 @@
-web: gunicorn --log-file=- SEP.wsgi:application
+web: gunicorn --log-file=- local.wsgi:application
