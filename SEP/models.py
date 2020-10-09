@@ -1,4 +1,5 @@
 import datetime
+from django.conf import settings
 from django.db import models
 
 # Create your models here.
@@ -48,3 +49,34 @@ class RequestEvent(models.Model):
 
     def __str__(self):
         return  '%s\'s request' % self.client
+
+class RequestRecruitment(models.Model):
+    type = models.CharField(max_length=10)
+    department = models.CharField(max_length=20)
+    experience = models.CharField(max_length=50)
+    job = models.CharField(max_length=50)
+    description = models.CharField(max_length=500)
+
+    def __str__(self):
+        return  '%s\' for %s' % (self.job, self.department)
+
+class RequestBudget(models.Model):
+    project = models.ForeignKey(Event, on_delete=models.CASCADE)
+    department = models.CharField(max_length=20)
+    budget = models.IntegerField(default=0)
+    description = models.CharField(max_length=500)
+
+    def __str__(self):
+        return  '%s budget request' % self.department
+
+class Task(models.Model):
+    project = models.ForeignKey(Event, on_delete=models.CASCADE)
+    description = models.CharField(max_length=500)
+    assigned = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="assigned_employee", on_delete=models.CASCADE)
+    assigner = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="manager_assigner", on_delete=models.CASCADE)
+    priority = models.CharField(max_length=10)
+    department = models.CharField(max_length=20)
+    status = models.CharField(max_length=20)
+
+    def __str__(self):
+        return  'Task for %s' % self.assigned.name
