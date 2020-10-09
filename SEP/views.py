@@ -145,11 +145,11 @@ def create_event(request):
         request_id = request.POST.get('request_pk')
         accepted_request = RequestEvent.objects.get(pk=request_id)
         # process the data in form.cleaned_data as required
-        old_client = Client.objects.filter(client_name = accepted_request.client)[0]
+        old_client = Client.objects.filter(client_name = accepted_request.client)
         
 
         if (old_client) :
-        	client_id = Client.objects.get(client_name = accepted_request.client)
+        	client_id = Client.objects.get(client_name = accepted_request.client)[0]
         	client_id.organized_events = old_client.organized_events + 1
         else :
         	client_id = Client(client_name = accepted_request.client, organized_events = 0)
