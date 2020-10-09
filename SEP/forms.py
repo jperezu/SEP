@@ -1,7 +1,7 @@
 from django import forms
 
 class event_form(forms.Form):
-	client = forms.CharField(max_length=10)
+	client = forms.CharField(max_length=20)
 	event_type = forms.CharField(max_length=200)
 	description = forms.CharField(max_length= 1000)
 	attendees = forms.IntegerField()
