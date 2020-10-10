@@ -59,7 +59,7 @@
   <label for="assigned">Assigned:</label><br>
   <select name="assigned"> 	
   	{% for user in users|in_department:"Decoration" %}
-    <option value="{{user.pk}}">{{user}}</option>
+    <option value="{{user.pk}}">{{user.first_name}}</option>
     {% endfor %}
   </select><br>
   <label for="priority">Priority:</label>
@@ -105,7 +105,7 @@
   <label for="assigned">Assigned:</label><br>
   <select name="assigned"> 	
   	{% for user in users|in_department:"Photography" %}
-    <option value="{{user.pk}}">{{user}}</option>
+    <option value="{{user.pk}}">{{user.first_name}}</option>
     {% endfor %}
   </select><br>
   <label for="priority">Priority:</label>
@@ -151,7 +151,7 @@
   <label for="assigned">Assigned:</label><br>
   <select name="assigned"> 	
   	{% for user in users|in_department:"Music" %}
-    <option value="{{user.pk}}">{{user}}</option>
+    <option value="{{user.pk}}">{{user.first_name}}</option>
     {% endfor %}
   </select><br>
   <label for="priority">Priority:</label>
@@ -196,7 +196,7 @@
   <label for="assigned">Assigned:</label><br>
   <select name="assigned"> 	
   	{% for user in users|in_department:"Graphic Design" %}
-    <option value="{{user.pk}}">{{user}}</option>
+    <option value="{{user.pk}}">{{user.first_name}}</option>
     {% endfor %}
   </select><br>
   <label for="priority">Priority:</label>
@@ -241,7 +241,7 @@
   <label for="assigned">Assigned:</label><br>
   <select name="assigned"> 	
   	{% for user in users|in_department:"Computer" %}
-    <option value="{{user.pk}}">{{user}}</option>
+    <option value="{{user.pk}}">{{user.first_name}}</option>
     {% endfor %}
   </select><br>
   <label for="priority">Priority:</label>
@@ -286,7 +286,7 @@
   <label for="assigned">Assigned:</label><br>
   <select name="assigned"> 	
   	{% for user in users|in_department:"Chef" %}
-    <option value="{{user.pk}}">{{user}}</option>
+    <option value="{{user.pk}}">{{user.first_name}}</option>
     {% endfor %}
   </select><br>
   <label for="priority">Priority:</label>
@@ -330,7 +330,7 @@
   <label for="assigned">Assigned:</label><br>
   <select name="assigned"> 	
   	{% for user in users|in_department:"Waiter" %}
-    <option value="{{user.pk}}">{{user}}</option>
+    <option value="{{user.pk}}">{{user.first_name}}</option>
     {% endfor %}
   </select><br>
   <label for="priority">Priority:</label>
