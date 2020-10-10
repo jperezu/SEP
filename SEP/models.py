@@ -75,8 +75,7 @@ class Task(models.Model):
     assigned = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="assigned_employee", on_delete=models.CASCADE)
     assigner = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="manager_assigner", on_delete=models.CASCADE)
     priority = models.CharField(max_length=10)
-    department = models.CharField(max_length=20)
     status = models.CharField(max_length=20)
 
     def __str__(self):
-        return  'Task for %s' % self.assigned.name
+        return  'Task for %s' % self.assigned.username

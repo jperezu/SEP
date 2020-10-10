@@ -180,7 +180,82 @@
 {%else %}
 <p> No event requests to show </p>
 {%endif %}
+{% endif %}
 
+
+{% if user.groups.all.0.name == 'Production Manager' or  user.groups.all.0.name == 'Services Manager'%}
+<p><a href="{% url 'events_progress' %}">Refresh Events</a></p>
+
+{%if event_pending%}
+<table>
+{% for event in event_pending %}
+	<tr>
+		<th>{{ event.client }}'s {{ event.event_type }}</th>
+		<th>{{ event.status }}</th>
+		
+		
+		<th><form method="get" action="{% url 'start_event' %}">
+		{% csrf_token %}
+		<button type="submit" name = "event_pk" value="{{ event.pk }}">Manage</button>
+		</form></th>
+	</tr>
+{% endfor %}
+</table>
+
+{%else %}
+<p> No events to show </p>
+{%endif %}
+{% endif %}
+
+{% if user.groups.all.0.name == 'Chef' or user.groups.all.0.name == 'Computer' or user.groups.all.0.name == 'Decoration' or user.groups.all.0.name == 'Graphic Design' or user.groups.all.0.name == 'Music' or user.groups.all.0.name == 'Photography' or user.groups.all.0.name == 'Waiter'%}
+	<p><a href="{% url 'get_tasks' %}">Refresh Tasks</a></p>
+	{% if tasks %}
+	<table>
+		<tr>
+			<th> Event </th>
+			<th> Priority </th>
+			<th> Sender </th>
+			<th> Status </th>
+			<th> Description </th>
+		</tr>
+			{% for task in tasks %}
+				<tr>
+					<th>{{task.project}}</th>
+					<th>{{task.priority}}</th>
+					<th>{{task.assigner}}</th>
+					<th>{{task.status}}</th>
+					<th>{{task.description}}</th>
+
+					{% if task.status == 'assigned' %}
+					<th><form method="post" action="{% url 'set_task_status' %}">
+					{% csrf_token %}
+					<input type="hidden" name="task_status" value="in progress">
+					<button type="submit" name = "task_pk" value="{{ task.pk }}">Start</button>
+					</form></th>
+					{% elif task.status == 'in progress' %}
+					<th><form method="post" action="{% url 'set_task_status' %}">
+					{% csrf_token %}
+					<input type="hidden" name="task_status" value="blocked">
+					<button type="submit" name = "task_pk" value="{{ task.pk }}">Block</button>
+					</form></th>
+					<th><form method="post" action="{% url 'set_task_status' %}">
+					{% csrf_token %}
+					<input type="hidden" name="task_status" value="finished">
+					<button type="submit" name = "task_pk" value="{{ task.pk }}">Finish</button>
+					</form></th>
+					{% elif task.status == 'blocked' %}
+					<th><form method="post" action="{% url 'set_task_status' %}">
+					{% csrf_token %}
+					<input type="hidden" name="task_status" value="in progress">
+					<button type="submit" name = "task_pk" value="{{ task.pk }}">Resume</button>
+					</form></th>
+					{% endif %}
+				</tr>
+			{% endfor %}
+	</table>
+	{%else %}
+	<p> No tasks to show </p>
+	{%endif %}
 {% endif %}
 
 {% endif %}

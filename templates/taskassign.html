@@ -1,0 +1,345 @@
+{% extends "base_generic.html" %}
+
+{% load def_filters %}
+
+{% block content %}
+
+{%if event %}
+
+<h3> General </h3>
+<ul>
+<li> Client: {{ event.client }} </li>
+<li>Event type: {{ event.event_type }}</li>
+<li>Attendees: {{ event.attendees }}</li>
+<li>Budget: {{ event.expected_budget }} €</li>
+<li>Dates: {{ event.from_date.month}}/{{event.from_date.day}}/{{event.from_date.year }} - 
+			{{ event.to_date.month}}/{{event.to_date.day}}/{{event.to_date.year }}  </li>
+<li>Description: {{ event.description }}</li>
+{% if user.groups.all.0.name == 'Services Manager' %}
+<li> Food and drinks needs: {{ event.food_drinks }} </li>
+{% endif %}
+<li>Other needs: {{ event.other }}</li>
+</ul>
+
+{% if user.groups.all.0.name == 'Production Manager' %}
+<h3> Decorations </h3>
+<ul>
+<li> Needs: {{ event.decorations }} </li>
+<li> Assigned Tasks:	
+	<table>
+	<tr>
+		<th> Employee </th>
+		<th> Task </th>
+		<th> Priority </th>
+		<th> Status </th>
+	</tr>
+	{% for user in users|in_department:"Decoration" %}
+		{% for task in tasks|assigned_tasks:user %}
+			<tr>
+				<th>{{task.assigned}}</th>
+				<th>{{task.description}}</th>
+				<th>{{task.priority}}</th>
+				<th>{{task.status}}</th>
+				<th><form method="get" action="{% url 'start_event' %}">
+				{% csrf_token %}
+				<input type="hidden" name="task_pk" value="{{ task.pk }}">
+				<button type="submit" name = "event_pk" value="{{ event.pk }}">Delete</button>
+				</form></th>
+			</tr>
+		{% endfor %}
+	{% endfor %}
+	</table>
+</li>
+</ul>
+
+<form method="post" action = "{% url 'start_event' %}">
+  {% csrf_token %}
+  <label for="description">Description:</label><br>
+  <input type="text" name="description"><br>
+  <label for="assigned">Assigned:</label><br>
+  <select name="assigned"> 	
+  	{% for user in users|in_department:"Decoration" %}
+    <option value="{{user.pk}}">{{user}}</option>
+    {% endfor %}
+  </select><br>
+  <label for="priority">Priority:</label>
+  <input type="radio" name="priority" value="low"><label for="low">Low </label>
+  <input type="radio" name="priority" value="medium"><label for="medium">Medium </label>
+  <input type="radio" name="priority" value="high"><label for="high">High </label><br>
+  <button type="submit" name = "event_pk" value="{{ event.pk }}">Send Task </button>
+</form>
+
+<h3> Photograph </h3>
+<ul>
+<li> Needs: {{ event.film_and_photos }} </li>
+<li> Assigned Tasks:	
+	<table>
+	<tr>
+		<th> Employee </th>
+		<th> Task </th>
+		<th> Priority </th>
+		<th> Status </th>
+	</tr>
+	{% for user in users|in_department:"Photography" %}
+		{% for task in tasks|assigned_tasks:user %}
+			<tr>
+				<th>{{task.assigned}}</th>
+				<th>{{task.description}}</th>
+				<th>{{task.priority}}</th>
+				<th>{{task.status}}</th>
+				<th><form method="get" action="{% url 'start_event' %}">
+				{% csrf_token %}
+				<input type="hidden" name="task_pk" value="{{ task.pk }}">
+				<button type="submit" name = "event_pk" value="{{ event.pk }}">Delete</button>
+				</form></th>
+			</tr>
+		{% endfor %}
+	{% endfor %}
+	</table>
+</li>
+</ul>
+<form method="post" action = "{% url 'start_event' %}">
+  {% csrf_token %}
+  <label for="description">Description:</label><br>
+  <input type="text" name="description"><br>
+  <label for="assigned">Assigned:</label><br>
+  <select name="assigned"> 	
+  	{% for user in users|in_department:"Photography" %}
+    <option value="{{user.pk}}">{{user}}</option>
+    {% endfor %}
+  </select><br>
+  <label for="priority">Priority:</label>
+  <input type="radio" name="priority" value="low"><label for="low">Low </label>
+  <input type="radio" name="priority" value="medium"><label for="medium">Medium </label>
+  <input type="radio" name="priority" value="high"><label for="high">High </label><br>
+  <button type="submit" name = "event_pk" value="{{ event.pk }}">Send Task </button>
+</form>
+
+<h3> Music </h3>
+<ul>
+<li> Needs: {{ event.music }} </li>
+<li> Assigned Tasks:	
+	<table>
+	<tr>
+		<th> Employee </th>
+		<th> Task </th>
+		<th> Priority </th>
+		<th> Status </th>
+	</tr>
+	{% for user in users|in_department:"Music" %}
+		{% for task in tasks|assigned_tasks:user %}
+			<tr>
+				<th>{{task.assigned}}</th>
+				<th>{{task.description}}</th>
+				<th>{{task.priority}}</th>
+				<th>{{task.status}}</th>
+				<th><form method="get" action="{% url 'start_event' %}">
+				{% csrf_token %}
+				<input type="hidden" name="task_pk" value="{{ task.pk }}">
+				<button type="submit" name = "event_pk" value="{{ event.pk }}">Delete</button>
+				</form></th>
+			</tr>
+		{% endfor %}
+	{% endfor %}
+	</table>
+</li>
+</ul>
+<form method="post" action = "{% url 'start_event' %}">
+  {% csrf_token %}
+  <label for="description">Description:</label><br>
+  <input type="text" name="description"><br>
+  <label for="assigned">Assigned:</label><br>
+  <select name="assigned"> 	
+  	{% for user in users|in_department:"Music" %}
+    <option value="{{user.pk}}">{{user}}</option>
+    {% endfor %}
+  </select><br>
+  <label for="priority">Priority:</label>
+  <input type="radio" name="priority" value="low"><label for="low">Low </label>
+  <input type="radio" name="priority" value="medium"><label for="medium">Medium </label>
+  <input type="radio" name="priority" value="high"><label for="high">High </label><br>
+  <button type="submit" name = "event_pk" value="{{ event.pk }}">Send Task </button>
+</form>
+<h3> Graphic Design </h3>
+<ul>
+<li> Needs: {{ event.posters_art }} </li>
+<li> Assigned Tasks:	
+	<table>
+	<tr>
+		<th> Employee </th>
+		<th> Task </th>
+		<th> Priority </th>
+		<th> Status </th>
+	</tr>
+	{% for user in users|in_department:"Graphic Design" %}
+		{% for task in tasks|assigned_tasks:user %}
+			<tr>
+				<th>{{task.assigned}}</th>
+				<th>{{task.description}}</th>
+				<th>{{task.priority}}</th>
+				<th>{{task.status}}</th>
+				<th><form method="get" action="{% url 'start_event' %}">
+				{% csrf_token %}
+				<input type="hidden" name="task_pk" value="{{ task.pk }}">
+				<button type="submit" name = "event_pk" value="{{ event.pk }}">Delete</button>
+				</form></th>
+			</tr>
+		{% endfor %}
+	{% endfor %}
+	</table>
+</li>
+</ul>
+<form method="post" action = "{% url 'start_event' %}">
+  {% csrf_token %}
+  <label for="description">Description:</label><br>
+  <input type="text" name="description"><br>
+  <label for="assigned">Assigned:</label><br>
+  <select name="assigned"> 	
+  	{% for user in users|in_department:"Graphic Design" %}
+    <option value="{{user.pk}}">{{user}}</option>
+    {% endfor %}
+  </select><br>
+  <label for="priority">Priority:</label>
+  <input type="radio" name="priority" value="low"><label for="low">Low </label>
+  <input type="radio" name="priority" value="medium"><label for="medium">Medium </label>
+  <input type="radio" name="priority" value="high"><label for="high">High </label><br>
+  <button type="submit" name = "event_pk" value="{{ event.pk }}">Send Task </button>
+</form>
+<h3> Computer Related </h3>
+<ul>
+<li> Needs: {{ event.computers }} </li>
+<li> Assigned Tasks:	
+	<table>
+	<tr>
+		<th> Employee </th>
+		<th> Task </th>
+		<th> Priority </th>
+		<th> Status </th>
+	</tr>
+	{% for user in users|in_department:"Computer" %}
+		{% for task in tasks|assigned_tasks:user %}
+			<tr>
+				<th>{{task.assigned}}</th>
+				<th>{{task.description}}</th>
+				<th>{{task.priority}}</th>
+				<th>{{task.status}}</th>
+				<th><form method="get" action="{% url 'start_event' %}">
+				{% csrf_token %}
+				<input type="hidden" name="task_pk" value="{{ task.pk }}">
+				<button type="submit" name = "event_pk" value="{{ event.pk }}">Delete</button>
+				</form></th>
+			</tr>
+		{% endfor %}
+	{% endfor %}
+	</table>
+</li>
+</ul>
+<form method="post" action = "{% url 'start_event' %}">
+  {% csrf_token %}
+  <label for="description">Description:</label><br>
+  <input type="text" name="description"><br>
+  <label for="assigned">Assigned:</label><br>
+  <select name="assigned"> 	
+  	{% for user in users|in_department:"Computer" %}
+    <option value="{{user.pk}}">{{user}}</option>
+    {% endfor %}
+  </select><br>
+  <label for="priority">Priority:</label>
+  <input type="radio" name="priority" value="low"><label for="low">Low </label>
+  <input type="radio" name="priority" value="medium"><label for="medium">Medium </label>
+  <input type="radio" name="priority" value="high"><label for="high">High </label><br>
+  <button type="submit" name = "event_pk" value="{{ event.pk }}">Send Task </button>
+</form>
+
+{% elif user.groups.all.0.name == 'Services Manager' %}
+<h3> Chefs </h3>
+<li> Assigned Tasks:	
+	<table>
+	<tr>
+		<th> Employee </th>
+		<th> Task </th>
+		<th> Priority </th>
+		<th> Status </th>
+	</tr>
+	{% for user in users|in_department:"Chef" %}
+		{% for task in tasks|assigned_tasks:user %}
+			<tr>
+				<th>{{task.assigned}}</th>
+				<th>{{task.description}}</th>
+				<th>{{task.priority}}</th>
+				<th>{{task.status}}</th>
+				<th><form method="get" action="{% url 'start_event' %}">
+				{% csrf_token %}
+				<input type="hidden" name="task_pk" value="{{ task.pk }}">
+				<button type="submit" name = "event_pk" value="{{ event.pk }}">Delete</button>
+				</form></th>
+			</tr>
+		{% endfor %}
+	{% endfor %}
+	</table>
+</li>
+</ul>
+<form method="post" action = "{% url 'start_event' %}">
+  {% csrf_token %}
+  <label for="description">Description:</label><br>
+  <input type="text" name="description"><br>
+  <label for="assigned">Assigned:</label><br>
+  <select name="assigned"> 	
+  	{% for user in users|in_department:"Chef" %}
+    <option value="{{user.pk}}">{{user}}</option>
+    {% endfor %}
+  </select><br>
+  <label for="priority">Priority:</label>
+  <input type="radio" name="priority" value="low"><label for="low">Low </label>
+  <input type="radio" name="priority" value="medium"><label for="medium">Medium </label>
+  <input type="radio" name="priority" value="high"><label for="high">High </label><br>
+  <button type="submit" name = "event_pk" value="{{ event.pk }}">Send Task </button>
+</form>
+
+<h3> Waiters </h3>
+<li> Assigned Tasks:	
+	<table>
+	<tr>
+		<th> Employee </th>
+		<th> Task </th>
+		<th> Priority </th>
+		<th> Status </th>
+	</tr>
+	{% for user in users|in_department:"Waiter" %}
+		{% for task in tasks|assigned_tasks:user %}
+			<tr>
+				<th>{{task.assigned}}</th>
+				<th>{{task.description}}</th>
+				<th>{{task.priority}}</th>
+				<th>{{task.status}}</th>
+				<th><form method="get" action="{% url 'start_event' %}">
+				{% csrf_token %}
+				<input type="hidden" name="task_pk" value="{{ task.pk }}">
+				<button type="submit" name = "event_pk" value="{{ event.pk }}">Delete</button>
+				</form></th>
+			</tr>
+		{% endfor %}
+	{% endfor %}
+	</table>
+</li>
+</ul>
+<form method="post" action = "{% url 'start_event' %}">
+  {% csrf_token %}
+  <label for="description">Description:</label><br>
+  <input type="text" name="description"><br>
+  <label for="assigned">Assigned:</label><br>
+  <select name="assigned"> 	
+  	{% for user in users|in_department:"Waiter" %}
+    <option value="{{user.pk}}">{{user}}</option>
+    {% endfor %}
+  </select><br>
+  <label for="priority">Priority:</label>
+  <input type="radio" name="priority" value="low"><label for="low">Low </label>
+  <input type="radio" name="priority" value="medium"><label for="medium">Medium </label>
+  <input type="radio" name="priority" value="high"><label for="high">High </label><br>
+  <button type="submit" name = "event_pk" value="{{ event.pk }}">Send Task </button>
+</form>
+
+{% endif %}
+{% endif %}
+{% endblock %}
