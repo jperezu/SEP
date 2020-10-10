@@ -189,7 +189,7 @@ def create_event(request):
 
 def show_events(request):
 
-	all_events = Event.objects.all()
+	all_events = Event.objects.exclude(status="finished")
 	for event in all_events:
 		print(str(event) + " " + event.status)
 		update_event_status(event.pk)
