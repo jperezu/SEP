@@ -27,7 +27,7 @@
   <ul class="sidebar-nav">
    {% if user.is_authenticated %}
      <li>  <a href="/">Home</a>
-     <li>{{ user.get_username }}</li> 
+     <li>{{ user.first_name }}</li> 
      <li> <p>{{user.groups.all.0.name}}</p> </li>
    {% endif %} 
   </ul>
