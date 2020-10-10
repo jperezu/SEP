@@ -25,7 +25,7 @@
 <h3> Decorations </h3>
 <ul>
 <li> Needs: {{ event.decorations }} </li>
-<li> Assigned Tasks:	
+</ul>
 	<table>
 	<tr>
 		<th> Employee </th>
@@ -49,8 +49,6 @@
 		{% endfor %}
 	{% endfor %}
 	</table>
-</li>
-</ul>
 
 <form method="post" action = "{% url 'start_event' %}">
   {% csrf_token %}
@@ -73,7 +71,7 @@
 <h3> Photograph </h3>
 <ul>
 <li> Needs: {{ event.film_and_photos }} </li>
-<li> Assigned Tasks:	
+</ul>
 	<table>
 	<tr>
 		<th> Employee </th>
@@ -97,8 +95,7 @@
 		{% endfor %}
 	{% endfor %}
 	</table>
-</li>
-</ul>
+
 <form method="post" action = "{% url 'start_event' %}">
   {% csrf_token %}
   <label for="description">Description:</label><br>
@@ -119,8 +116,8 @@
 
 <h3> Music </h3>
 <ul>
-<li> Needs: {{ event.music }} </li>
-<li> Assigned Tasks:	
+<li> Needs: {{ event.music }} </li>	
+</ul>
 	<table>
 	<tr>
 		<th> Employee </th>
@@ -144,8 +141,6 @@
 		{% endfor %}
 	{% endfor %}
 	</table>
-</li>
-</ul>
 <form method="post" action = "{% url 'start_event' %}">
   {% csrf_token %}
   <label for="description">Description:</label><br>
@@ -166,7 +161,7 @@
 <h3> Graphic Design </h3>
 <ul>
 <li> Needs: {{ event.posters_art }} </li>
-<li> Assigned Tasks:	
+</ul>
 	<table>
 	<tr>
 		<th> Employee </th>
@@ -190,8 +185,6 @@
 		{% endfor %}
 	{% endfor %}
 	</table>
-</li>
-</ul>
 <form method="post" action = "{% url 'start_event' %}">
   {% csrf_token %}
   <label for="description">Description:</label><br>
@@ -212,7 +205,7 @@
 <h3> Computer Related </h3>
 <ul>
 <li> Needs: {{ event.computers }} </li>
-<li> Assigned Tasks:	
+</ul>	
 	<table>
 	<tr>
 		<th> Employee </th>
@@ -236,8 +229,6 @@
 		{% endfor %}
 	{% endfor %}
 	</table>
-</li>
-</ul>
 <form method="post" action = "{% url 'start_event' %}">
   {% csrf_token %}
   <label for="description">Description:</label><br>
@@ -258,7 +249,6 @@
 
 {% elif user.groups.all.0.name == 'Services Manager' %}
 <h3> Chefs </h3>
-<li> Assigned Tasks:	
 	<table>
 	<tr>
 		<th> Employee </th>
@@ -282,8 +272,6 @@
 		{% endfor %}
 	{% endfor %}
 	</table>
-</li>
-</ul>
 <form method="post" action = "{% url 'start_event' %}">
   {% csrf_token %}
   <label for="description">Description:</label><br>
@@ -303,7 +291,6 @@
 </form>
 
 <h3> Waiters </h3>
-<li> Assigned Tasks:	
 	<table>
 	<tr>
 		<th> Employee </th>
@@ -327,8 +314,6 @@
 		{% endfor %}
 	{% endfor %}
 	</table>
-</li>
-</ul>
 <form method="post" action = "{% url 'start_event' %}">
   {% csrf_token %}
   <label for="description">Description:</label><br>
