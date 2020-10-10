@@ -188,17 +188,18 @@ def create_event(request):
 
 
 def show_events(request):
-	
+
 	all_events = Event.objects.all()
 	for event in all_events:
 		print(str(event) + " " + event.status)
 		update_event_status(event.pk)
 
 	event_pending = Event.objects.exclude(status="finished")
+	event_finished = Event.objects.filter(status="finished")
 	return render(
 		request,
 		'index.html',
-		context={'event_pending': event_pending},
+		context={'event_pending': event_pending, 'event_finished': event_finished},
 		)
 
 def update_event_status(event_id):

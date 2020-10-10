@@ -186,6 +186,7 @@
 {% if user.groups.all.0.name == 'Production Manager' or  user.groups.all.0.name == 'Services Manager'%}
 <p><a href="{% url 'events_progress' %}">Refresh Events</a></p>
 
+<h2>Current Events</h2>
 {%if event_pending%}
 <table>
 {% for event in event_pending %}
@@ -198,6 +199,22 @@
 		{% csrf_token %}
 		<button type="submit" name = "event_pk" value="{{ event.pk }}">Manage</button>
 		</form></th>
+	</tr>
+{% endfor %}
+</table>
+
+{%else %}
+<p> No events to show </p>
+{%endif %}
+{% endif %}
+
+<h2>Current Events</h2>
+{%if event_finished%}
+<table>
+{% for event in event_finished %}
+	<tr>
+		<th>{{ event.client }}'s {{ event.event_type }}</th>
+		<th>{{ event.status }}</th>
 	</tr>
 {% endfor %}
 </table>
