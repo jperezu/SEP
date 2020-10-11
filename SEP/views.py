@@ -4,6 +4,8 @@ from django.http import HttpResponse,HttpResponseRedirect
 from django.contrib.auth.models import User
 from .models import Client, Event, RequestEvent, Task
 from .forms import event_form, task_form
+from django.contrib.auth import authenticate, login
+from django.contrib import messages
 
 def index(request):
 	# Number of visits to this view, as counted in the session variable.
@@ -36,41 +38,44 @@ def index(request):
 	#return HttpResponse("You're at the SEP index.")
 # Create your views here.
 
+def login_view(request):
+	user = request.POST.get("user_name")
+	password = request.POST.get("user_password")
+
+	log_user = authenticate(username=user,
+	 	password=password,)
+	if log_user :
+		login(request, log_user)
+	else :
+		storage = messages.get_messages(request)
+		storage.used = True
+		messages.info(request, "Your username and password didn't match. Please try again.")
+	return HttpResponseRedirect('/')
+
 def event_request(request):
 	# if this is a POST request we need to process the form data
 	if request.method == 'POST':
-		# create a form instance and populate it with data from the request:
-		form = event_form(request.POST)
-		# check whether it's valid:
-		if form.is_valid():
-			# process the data in form.cleaned_data as required
-			new_req = RequestEvent(
-				client = form.cleaned_data['client'],
-				event_type = form.cleaned_data['event_type'],
-				description = form.cleaned_data['description'],
-				attendees = form.cleaned_data['attendees'],
-				expected_budget = form.cleaned_data['expected_budget'],
-				from_date = form.cleaned_data['from_date'],
-				to_date = form.cleaned_data['to_date'],
-				decorations = form.cleaned_data['decorations'],
-				film_and_photos = form.cleaned_data['film_and_photos'],
-				posters_art = form.cleaned_data['posters_art'],
-				food_drinks = form.cleaned_data['food_drinks'],
-				music = form.cleaned_data['music'],
-				computers = form.cleaned_data['computers'],
-				other = form.cleaned_data['other'],
-				status = "created"
-			)
+		new_req = RequestEvent(
+			client = request.POST.get('client'),
+			event_type = request.POST.get('event_type'),
+			description = request.POST.get('description'),
+			attendees = request.POST.get('attendees'),
+			expected_budget = request.POST.get('expected_budget'),
+			from_date = request.POST.get('from_date'),
+			to_date = request.POST.get('to_date'),
+			decorations = request.POST.get('decorations'),
+			film_and_photos = request.POST.get('film_and_photos'),
+			posters_art = request.POST.get('posters_art'),
+			food_drinks = request.POST.get('food_drinks'),
+			music = request.POST.get('music'),
+			computers = request.POST.get('computers'),
+			other = request.POST.get('other'),
+			status = "created",
+		)
 
-			new_req.save()
-			# redirect to a new URL:
-			return render(request, 'index.html')
-
-	# if a GET (or any other method) we'll create a blank form
-	else:
-		form = event_form()
-
-	return render(request, 'forms/event_form.html', {'form': form})
+		new_req.save()
+		# redirect to a new URL:
+		return HttpResponseRedirect('/')
 
 def get_pending_events(request):
 	event_requests = RequestEvent.objects.filter(status = "created")
@@ -189,12 +194,11 @@ def create_event(request):
 
 def show_events(request):
 
-	all_events = Event.objects.exclude(status="finished")
+	all_events = Event.objects.exclude(status="finished").exclude(status="archived")
 	for event in all_events:
-		print(str(event) + " " + event.status)
 		update_event_status(event.pk)
 
-	event_pending = Event.objects.exclude(status="finished")
+	event_pending = Event.objects.exclude(status="finished").exclude(status="archived")
 	event_finished = Event.objects.filter(status="finished")
 	return render(
 		request,
@@ -236,6 +240,12 @@ def update_event_status(event_id):
 	else:
 		event.status = event_status
 	event.save()
+def archive_event(request):
+	event_id = request.GET.get('event_pk')
+	event = Event.objects.get(pk=event_id)
+	event.status = "archived"
+	event.save()
+	return show_events(request)
 
 def assign_tasks(request):
 

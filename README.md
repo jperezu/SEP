@@ -4,10 +4,10 @@ To access the service go to https://id2207-sep.herokuapp.com/ <br>
 To use the local version run the next command from root directory of the SEP project:</p>
 
 ```bash
-python start_server.py
+python sep_server.py
 ```
 
-The script <i>start_server.py</i> installs the needed requirements, checks the database structure, populates it, and runs the application server <i>(Assuming python already installed, else go to https://www.python.org/downloads/)</i>
+The script <i>sep_server.py</i> installs the needed requirements, checks the database structure, populates it, and runs the application server <i>(Assuming python already installed, else go to https://www.python.org/downloads/)</i>
 
 <b>(The server needs to remain opened while the application is running to work)</b>
 

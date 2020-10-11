@@ -7,10 +7,20 @@
 
 
 <!-- You have visited this page {{ num_visits }} times. -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 
+{% if messages %}
+    {% for message in messages %}
+    {% if message.tags %}
+     <div class="alert">
+  	<span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+  	<strong> {{ message }}</strong>
+	</div>
+	{% endif %}
+    {% endfor %}
 
-{% if form.errors %}
-<p>Your username and password didn't match. Please try again.</p>
 {% endif %}
 
 {% if next %}
@@ -24,12 +34,38 @@
 
 {% if not user.is_authenticated %}
 
-	<form method="post" action="{% url 'login' %}">
-	  {% csrf_token %}
-	  {{ form.as_p }}
-	  <button type="submit">Log In</button>
-	</form>
+<button href="#myModal" class="trigger-btn" data-toggle="modal">Log In</button>
 
+<!-- Modal HTML -->
+<div id="myModal" class="modal fade">
+	<div class="modal-dialog modal-login">
+		<div class="modal-content">
+			<form action="{% url 'login' %}" method="post">
+				{% csrf_token %}
+				<div class="modal-header">				
+					<h4 class="modal-title">Login</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				</div>
+				<div class="modal-body">				
+					<div class="form-group">
+						<label>Username</label>
+						<input type="text" class="form-control" name = "user_name" required="required">
+					</div>
+					<div class="form-group">
+						<div class="clearfix">
+							<label>Password</label>
+						</div>
+						
+						<input type="password" class="form-control" name = "user_password" required="required">
+					</div>
+				</div>
+				<div class="modal-footer justify-content-between">
+					<input type="submit" class="btn btn-primary" value="Login">
+				</div>
+			</form>
+		</div>
+	</div>
+</div>     
 {% else %}
 
 
@@ -39,7 +75,85 @@
 	</form>
 
 {% if user.groups.all.0.name == 'CS Team' %}
-	<p><a href="{% url 'event_form' %}">Add Event Request</a></p>
+
+	<button href="#myModal" class="trigger-btn" data-toggle="modal">Add event request</button>
+
+<!-- Modal HTML -->
+<div id="myModal" class="modal fade">
+	<div class="modal-dialog modal-login">
+		<div class="modal-content">
+			<form action="{% url 'event_form' %}" method="post">
+				{% csrf_token %}
+				<div class="modal-header">				
+					<h4 class="modal-title">New Event Request</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				</div>
+				<div class="modal-body">			
+					<div class="form-group">
+						<label>Client</label>
+						<input type="text" class="form-control" name = "client" required="required">
+					</div>
+					<div class="form-group">
+						<label>Type</label>
+						<input type="text" class="form-control" name = "event_type" required="required">
+					</div>
+					<div class="form-group">
+						<label>Description</label>
+						<input type="text" class="form-control" name = "description" required="required">
+					</div>
+					<div class="form-group">
+						<label>Attendees</label>
+						<input type="number" class="form-control" name = "attendees" required="required">
+					</div>
+					<div class="form-group">
+						<label>Budget</label>
+						<input type="number" class="form-control" name = "expected_budget" required="required">
+					</div>
+					<div class="form-group">
+						<label>From</label>
+						<input type="date" class="form-control" name = "from_date" required="required">
+					</div>
+					<div class="form-group">
+						<label>To</label>
+						<input type="date" class="form-control" name = "to_date" required="required">
+					</div>
+					<div class="form-group">
+						<label>Decorations</label>
+						<input type="text" class="form-control" name = "decorations" required="required">
+					</div>
+					<div class="form-group">
+						<label>Photography</label>
+						<input type="text" class="form-control" name = "film_and_photos" required="required">
+					</div>
+					<div class="form-group">
+						<label>Posters</label>
+						<input type="text" class="form-control" name = "posters_art" required="required">
+					</div>
+					<div class="form-group">
+						<label>Food and drinks</label>
+						<input type="text" class="form-control" name = "food_drinks" required="required">
+					</div>
+					<div class="form-group">
+						<label>Music</label>
+						<input type="text" class="form-control" name = "music" required="required">
+					</div>
+					<div class="form-group">
+						<label>Computers</label>
+						<input type="text" class="form-control" name = "computers" required="required">
+					</div>
+					<div class="form-group">
+						<label>Other</label>
+						<input type="text" class="form-control" name = "other" required="required">
+					</div>
+				</div>
+				<div class="modal-footer justify-content-between">
+					<input type="submit" class="btn btn-primary" value="Add">
+				</div>
+			</form>
+		</div>
+	</div>
+</div>     
+
 {% endif %} 
 
 {% if user.groups.all.0.name == 'CS Manager' %}
@@ -60,8 +174,8 @@
 		<th>{{ event.event_type }}</th>
 		<th>{{ event.attendees }}</th>
 		<th>{{ event.expected_budget }} €</th>
-		<th>{{ event.from_date.month}}/{{event.from_date.day}}/{{event.from_date.year }} - 
-			{{ event.to_date.month}}/{{event.to_date.day}}/{{event.to_date.year }} </th>
+		<th>{{ event.from_date.year}}/{{event.from_date.month}}/{{event.from_date.day }} - 
+			{{ event.to_date.year}}/{{event.to_date.month}}/{{event.to_date.day }} </th>
 		<th>{{ event.description }}</th>
 	<th><form method="post" action="{% url 'event_cs_accept' %}">
 	{% csrf_token %}
@@ -207,13 +321,16 @@
 <p> No events to show </p>
 {%endif %}
 
-<h2>Past Events</h2>
+<h2>Finished Events</h2>
 {%if event_finished%}
 <table>
 {% for event in event_finished %}
 	<tr>
 		<th>{{ event.client }}'s {{ event.event_type }}</th>
-		<th>{{ event.status }}</th>
+		<th><form method="get" action="{% url 'archive_event' %}">
+		{% csrf_token %}
+		<button type="submit" name = "event_pk" value="{{ event.pk }}">Archive</button>
+		</form></th>
 	</tr>
 {% endfor %}
 </table>
@@ -221,6 +338,7 @@
 {%else %}
 <p> No events to show </p>
 {%endif %}
+
 {% endif %}
 
 {% if user.groups.all.0.name == 'Chef' or user.groups.all.0.name == 'Computer' or user.groups.all.0.name == 'Decoration' or user.groups.all.0.name == 'Graphic Design' or user.groups.all.0.name == 'Music' or user.groups.all.0.name == 'Photography' or user.groups.all.0.name == 'Waiter'%}

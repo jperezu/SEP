@@ -19,4 +19,7 @@ urlpatterns = [
     path('task/remove', views.remove_task, name='remove_task'),
     path('task', views.get_tasks, name='get_tasks'),
     path('task/status', views.set_task_status, name='set_task_status'),
+    path('event/archive', views.archive_event, name='archive_event'),
+    path('login', views.login_view, name='login'),
+
 ]
