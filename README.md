@@ -1,27 +1,31 @@
-##Download heroku database:
-	heroku run python3 manage.py dumpdata --exclude contenttypes > data.json
-##Upload Django database:
-	heroku run python3 manage.py migrate
-	heroku run python3 manage.py loaddata data.json
+## Download heroku database:
+```bash
+heroku run python3 manage.py dumpdata --exclude contenttypes > data.json
+```
+## Upload Django database:
+```bash
+heroku run python3 manage.py migrate
+heroku run python3 manage.py loaddata data.json
+```
 -------------------------------------------------------------------------------	
-##Installation
-	```bash
-	(Assuming python already installed)
-	python -m pip install -r requirements.txt
-	```
-##Load database:
-	```bash
-	python manage.py makemigrations
-	python manage.py migrate
-	python manage.py loaddata data.json
-	python3 manage.py collectstatic
-	```
-Start app:
+## Installation
+* Assuming python already installed
+```bash
+python -m pip install -r requirements.txt
+```
+## Load database:
+```bash
+python manage.py makemigrations
+python manage.py migrate
+python manage.py loaddata data.json
+python3 manage.py collectstatic
+```
+## Start app:
 	```bash
 	python manage.py runserver
 	Go to http://127.0.0.1:8000/
 	```
-Login credentials
+## Login credentials
 	USERNAME			PASSWORD	EMPLOYEE
 	admin				admin       Platform administrator
 	(open http://127.0.0.1:8000/admin for the administration platform)
