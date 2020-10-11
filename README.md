@@ -7,12 +7,12 @@ To use the local version clone this repository and in the root directory of the 
 python start_server.py
 ```
 
-* The script start_server.py installs the needed requirements, checks the database structure, populates it, and runs the application server (Assuming python already installed, else go to https://www.python.org/downloads/)
+* The script <i>start_server.py</i> installs the needed requirements, checks the database structure, populates it, and runs the application server <i>(Assuming python already installed, else go to https://www.python.org/downloads/)</i>
 
 * To access the local application go to http://127.0.0.1:8000/
 * To access the administration platform go to http://127.0.0.1:8000/admin/
 
-(The server needs to remain opened while the application is running to work)
+<b>(The server needs to remain opened while the application is running to work)</b>
 
 -------------------------------------------------------------------------------
 
