@@ -25,6 +25,7 @@ python manage.py runserver
 Go to http://127.0.0.1:8000/
 #open http://127.0.0.1:8000/admin/ for the administration platform
 ```
+-------------------------------------------------------------------------------
 
 ## Login credentials
 	USERNAME	PASSWORD	EMPLOYEE
