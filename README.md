@@ -27,9 +27,9 @@ Go to http://127.0.0.1:8000/
 (open http://127.0.0.1:8000/admin for the administration platform)
 ```
 ## Login credentials
-	USERNAME		PASSWORD	EMPLOYEE
+	USERNAME	PASSWORD	EMPLOYEE
 	------------------------------------
-	admin 			admin 		Platform administrator
+	admin 	admin 	Platform administrator
 
 	--------------CS Manager--------------
 	janet@sep.se 	id2207sep 	Janet
