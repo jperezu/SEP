@@ -1,30 +1,19 @@
 ## SEP application
 <p>The SEP platform is currently running on an online server. <br>
 To access the service go to https://id2207-sep.herokuapp.com/ <br>
-To use the local version clone this repository and follow the steps below:</p>
+To use the local version clone this repository and in the root directory of the SEP project run the next command:</p>
 
--------------------------------------------------------------------------------
-
-## 1. Installation
-* Assuming python already installed
 ```bash
-python -m pip install -r requirements.txt
+python start_server.py
 ```
 
-## 2. Load database
-```bash
-python manage.py makemigrations
-python manage.py migrate
-python manage.py loaddata data.json
-python3 manage.py collectstatic
-```
+* The script start_server.py installs the needed requirements, checks the database structure, populates it, and runs the application server (Assuming python already installed, else go to https://www.python.org/downloads/)
 
-## 3. Start app
-```bash
-python manage.py runserver
-Go to http://127.0.0.1:8000/
-#open http://127.0.0.1:8000/admin/ for the administration platform
-```
+* To access the local application go to http://127.0.0.1:8000/
+* To access the administration platform go to http://127.0.0.1:8000/admin/
+
+(The server needs to remain opened while the application is running to work)
+
 -------------------------------------------------------------------------------
 
 ## Login credentials
