@@ -1,23 +1,16 @@
-## Download heroku database
-```bash
-heroku run python3 manage.py dumpdata --exclude contenttypes > data.json
-```
-## Upload Django database
-```bash
-heroku run python3 manage.py migrate
-heroku run python3 manage.py loaddata data.json
-```
 ## SEP application
 <p>The SEP platform is currently running on an online server. <br>
 To access the service go to https://id2207-sep.herokuapp.com/ <br>
 To use the local version clone this repository and follow the steps below:</p>
 
--------------------------------------------------------------------------------	
+-------------------------------------------------------------------------------
+
 ## 1. Installation
 * Assuming python already installed
 ```bash
 python -m pip install -r requirements.txt
 ```
+
 ## 2. Load database
 ```bash
 python manage.py makemigrations
@@ -25,12 +18,14 @@ python manage.py migrate
 python manage.py loaddata data.json
 python3 manage.py collectstatic
 ```
+
 ## 3. Start app
 ```bash
 python manage.py runserver
 Go to http://127.0.0.1:8000/
 #open http://127.0.0.1:8000/admin/ for the administration platform
 ```
+
 ## Login credentials
 	USERNAME	PASSWORD	EMPLOYEE
 	--------------------------------------
