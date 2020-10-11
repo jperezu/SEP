@@ -32,7 +32,7 @@ Go to http://127.0.0.1:8000/
 	admin 		admin 		Platform administrator
 
 	--------------CS Manager--------------
-	janet@sep.se 	id2207sep 	Janet
+	janet@sep.se 	id2207sep	Janet
 
 	----------------CS Team---------------
 	carine@sep.se	id2207sep   Carine
