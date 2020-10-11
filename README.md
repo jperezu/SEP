@@ -29,9 +29,9 @@ Go to http://127.0.0.1:8000/
 | USERNAME | PASSWORD | EMPLOYEE |
 |----------|----------|----------|
 |  admin   |   admin  |Platform administrator |
-|(open http://127.0.0.1:8000/admin for the administration platform)|||
+<td colspan=3>(open http://127.0.0.1:8000/admin for the administration platform)
 
-|CS Manager|||
+<td colspan=3> CS Manager
 janet@sep.se|id2207sep|Janet
 ------------------------CS Team------------------------
 	carine@sep.se		id2207sep   Carine
