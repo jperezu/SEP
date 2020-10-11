@@ -1,8 +1,8 @@
-## Download heroku database:
+## Download heroku database
 ```bash
 heroku run python3 manage.py dumpdata --exclude contenttypes > data.json
 ```
-## Upload Django database:
+## Upload Django database
 ```bash
 heroku run python3 manage.py migrate
 heroku run python3 manage.py loaddata data.json
@@ -13,26 +13,25 @@ heroku run python3 manage.py loaddata data.json
 ```bash
 python -m pip install -r requirements.txt
 ```
-## Load database:
+## Load database
 ```bash
 python manage.py makemigrations
 python manage.py migrate
 python manage.py loaddata data.json
 python3 manage.py collectstatic
 ```
-## Start app:
-	```bash
-	python manage.py runserver
-	Go to http://127.0.0.1:8000/
-	```
+## Start app
+```bash
+python manage.py runserver
+Go to http://127.0.0.1:8000/
+```
 ## Login credentials
-	USERNAME			PASSWORD	EMPLOYEE
-	admin				admin       Platform administrator
-	(open http://127.0.0.1:8000/admin for the administration platform)
-	-----------------------CS Manager----------------------
-	janet@sep.se		id2207sep   Janet
-
-	------------------------CS Team------------------------
+USERNAME|PASSWORD|EMPLOYEE
+admin|admin|Platform administrator
+(open http://127.0.0.1:8000/admin for the administration platform)
+-----------------------CS Manager----------------------
+janet@sep.se|id2207sep|Janet
+------------------------CS Team------------------------
 	carine@sep.se		id2207sep   Carine
 	judy@sep.se		    id2207sep   Judy
 	sam@sep.se		    id2207sep   Sam
