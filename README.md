@@ -8,9 +8,9 @@ heroku run python3 manage.py migrate
 heroku run python3 manage.py loaddata data.json
 ```
 ## SEP application
-The SEP platform is currently running on an online server. <br>
+<p>The SEP platform is currently running on an online server. <br>
 To access the service go to https://id2207-sep.herokuapp.com/ <br>
-To use the local version clone this repository and follow the steps below:
+To use the local version clone this repository and follow the steps below:</p>
 -------------------------------------------------------------------------------	
 ## Installation
 * Assuming python already installed
