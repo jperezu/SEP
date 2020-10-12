@@ -36,83 +36,7 @@
 
 {% if user.groups.all.0.name == 'CS Team' %}
 
-	<button href="#myModal" class="trigger-btn" data-toggle="modal">Add event request</button>
-
-<!-- Modal HTML -->
-<div id="myModal" class="modal fade">
-	<div class="modal-dialog modal-login">
-		<div class="modal-content">
-			<form action="{% url 'event_form' %}" method="post">
-				{% csrf_token %}
-				<div class="modal-header">				
-					<h4 class="modal-title">Event Request</h4>
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				</div>
-				<div class="modal-body">			
-					<div class="form-group">
-						<label>Client</label>
-						<input type="text" class="form-control" name = "client" required="required">
-					</div>
-					<div class="form-group">
-						<label>Type</label>
-						<input type="text" class="form-control" name = "event_type" required="required">
-					</div>
-					<div class="form-group">
-						<label>Description</label>
-						<input type="text" class="form-control" name = "description" required="required">
-					</div>
-					<div class="form-group">
-						<label>Attendees</label>
-						<input type="number" class="form-control" name = "attendees" required="required">
-					</div>
-					<div class="form-group">
-						<label>Budget</label>
-						<input type="number" class="form-control" name = "expected_budget" required="required">
-					</div>
-					<div class="form-group">
-						<label>From</label>
-						<input type="date" class="form-control" name = "from_date" required="required">
-					</div>
-					<div class="form-group">
-						<label>To</label>
-						<input type="date" class="form-control" name = "to_date" required="required">
-					</div>
-					<div class="form-group">
-						<label>Decorations</label>
-						<input type="text" class="form-control" name = "decorations" required="required">
-					</div>
-					<div class="form-group">
-						<label>Photography</label>
-						<input type="text" class="form-control" name = "film_and_photos" required="required">
-					</div>
-					<div class="form-group">
-						<label>Posters</label>
-						<input type="text" class="form-control" name = "posters_art" required="required">
-					</div>
-					<div class="form-group">
-						<label>Food and drinks</label>
-						<input type="text" class="form-control" name = "food_drinks" required="required">
-					</div>
-					<div class="form-group">
-						<label>Music</label>
-						<input type="text" class="form-control" name = "music" required="required">
-					</div>
-					<div class="form-group">
-						<label>Computers</label>
-						<input type="text" class="form-control" name = "computers" required="required">
-					</div>
-					<div class="form-group">
-						<label>Other</label>
-						<input type="text" class="form-control" name = "other" required="required">
-					</div>
-				</div>
-				<div class="modal-footer justify-content-between">
-					<input type="submit" class="btn btn-primary" value="Add">
-				</div>
-			</form>
-		</div>
-	</div>
-</div>     
+	<button href="#eventModal" class="trigger-btn" data-toggle="modal">Add event request</button>
 
 {% endif %} 
 
@@ -130,21 +54,21 @@
 	</tr>
 {% for event in event_requests %}
 	<tr>
-		<th>{{ event.client }}</th>
-		<th>{{ event.event_type }}</th>
-		<th>{{ event.attendees }}</th>
-		<th>{{ event.expected_budget }} €</th>
-		<th>{{ event.from_date.year}}/{{event.from_date.month}}/{{event.from_date.day }} - 
-			{{ event.to_date.year}}/{{event.to_date.month}}/{{event.to_date.day }} </th>
-		<th>{{ event.description }}</th>
-	<th><form method="post" action="{% url 'event_cs_accept' %}" style = "margin: 0 0 0 0;">
+		<td>{{ event.client }}</td>
+		<td>{{ event.event_type }}</td>
+		<td>{{ event.attendees }}</td>
+		<td>{{ event.expected_budget }} €</td>
+		<td>{{ event.from_date.year}}/{{event.from_date.month}}/{{event.from_date.day }} - 
+			{{ event.to_date.year}}/{{event.to_date.month}}/{{event.to_date.day }} </td>
+		<td>{{ event.description }}</td>
+	<td><form method="post" action="{% url 'event_cs_accept' %}" style = "margin: 0 0 0 0;">
 	{% csrf_token %}
 	<button type="submit" name = "request_pk" value="{{ event.pk }}">Accept</button>
-	</form></th>
-	<th><form method="post" action="{% url 'event_reject' %}" style = "margin: 0 0 0 0;">
+	</form></td>
+	<td><form method="post" action="{% url 'event_reject' %}" style = "margin: 0 0 0 0;">
 	{% csrf_token %}
 	<button type="submit" name = "request_pk" value="{{ event.pk }}">Reject</button>
-	</form></th>
+	</form></td>
 	</tr>
 {% endfor %}
 </table>

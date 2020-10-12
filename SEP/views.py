@@ -326,3 +326,13 @@ def set_task_status(request):
 		'index.html',
 		context={'tasks': tasks},
 		)
+
+def get_history(request):
+	archived_events = Event.objects.filter(status = "archived")
+	archived_clients = Client.objects.filter(organized_events__gte=1)
+
+	return render(
+		request,
+		'recordhistory.html',
+		context={'archived_events': archived_events, 'archived_clients' : archived_clients},
+	)

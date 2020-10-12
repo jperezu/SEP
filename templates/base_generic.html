@@ -25,18 +25,35 @@
 
 <div class="container-fluid">
 
+<script>
+function myFunction() {
+  var x = document.getElementById("nav");
+  if (x.className === "elem") {
+    x.className += " responsive";
+  } else {
+    x.className = "elem";
+  }
+}
+</script>
 
 <div class="row">
   <div class="col-sm-2">
   {% block sidebar %}
-  <ul class="sidebar-nav_1">
+  <div class="sidebar-nav_1">
    {% if user.is_authenticated %}
-     <li>  <a href="/"><u>Home</u></a></li>
-      <li> <br></li>
-     <li><b style= "font-size: 1.25em">{{ user.first_name }}</b></li> 
-     <li> <p>{{user.groups.all.0.name}}</p> </li>
+   <ul class = "menu">
+     <li style="padding-left: 15px;"><b style= "font-size: 1.25em">{{ user.first_name }}</b></li> 
+     <li style="padding-left: 35px"> <p>{{user.groups.all.0.name}}</p> </li>
    {% endif %} 
-  </ul>
+  </ul><br>
+   {% if user.groups.all.0.name == 'Production Manager' or  user.groups.all.0.name == 'Services Manager'%}
+
+
+
+     <div class="elem" id="nav"><div class="a" onclick="location.href='/';">Home</div> </div>
+     <div class="elem" id="nav"><div class="a" onclick="location.href='/history';">History</div> </div></div>
+     <a href="javascript:void(0);" class="icon" onclick="myFunction()"></a>
+     {%endif%}
   <ul class="sidebar-nav">
     {% if not user.is_authenticated %}
 
@@ -86,6 +103,83 @@
         </div>
         <div class="modal-footer justify-content-between">
           <input type="submit" class="btn btn-primary" value="Login">
+        </div>
+      </form>
+    </div>
+  </div>
+</div>     
+
+
+<!-- Modal HTML -->
+<div id="eventModal" class="modal fade">
+  <div class="modal-dialog modal-login">
+    <div class="modal-content"style="width: 640px; position: absolute; left: 50%;transform: translate(-50%, 0%);">
+      <form action="{% url 'event_form' %}" method="post">
+        {% csrf_token %}
+        <div class="modal-header">        
+          <h4 class="modal-title">Event Request</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        </div>
+        <div class="modal-body">      
+          <div class="form-group">
+            <label>Client</label>
+            <input type="text" class="form-control" name = "client" required="required">
+          </div>
+          <div class="form-group">
+            <label>Type</label>
+            <input type="text" class="form-control" name = "event_type" required="required">
+          </div>
+          <div class="form-group">
+            <label>Description</label>
+            <input type="text" class="form-control" name = "description" required="required">
+          </div>
+          <div class="form-group">
+            <label>Attendees</label>
+            <input type="number" class="form-control" name = "attendees" required="required">
+          </div>
+          <div class="form-group">
+            <label>Budget</label>
+            <input type="number" class="form-control" name = "expected_budget" required="required">
+          </div>
+          <div class="form-group">
+            <label>From</label>
+            <input type="date" class="form-control" name = "from_date" required="required">
+          </div>
+          <div class="form-group">
+            <label>To</label>
+            <input type="date" class="form-control" name = "to_date" required="required">
+          </div>
+          <div class="form-group">
+            <label>Decorations</label>
+            <input type="text" class="form-control" name = "decorations" required="required">
+          </div>
+          <div class="form-group">
+            <label>Photography</label>
+            <input type="text" class="form-control" name = "film_and_photos" required="required">
+          </div>
+          <div class="form-group">
+            <label>Posters</label>
+            <input type="text" class="form-control" name = "posters_art" required="required">
+          </div>
+          <div class="form-group">
+            <label>Food and drinks</label>
+            <input type="text" class="form-control" name = "food_drinks" required="required">
+          </div>
+          <div class="form-group">
+            <label>Music</label>
+            <input type="text" class="form-control" name = "music" required="required">
+          </div>
+          <div class="form-group">
+            <label>Computers</label>
+            <input type="text" class="form-control" name = "computers" required="required">
+          </div>
+          <div class="form-group">
+            <label>Other</label>
+            <input type="text" class="form-control" name = "other" required="required">
+          </div>
+        </div>
+        <div class="modal-footer justify-content-between">
+          <input type="submit" class="btn btn-primary" value="Add">
         </div>
       </form>
     </div>

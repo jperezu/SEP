@@ -1,7 +1,22 @@
 .sidebar-nav {
     /*margin-top: 20px;*/
   	margin: auto auto;
-    list-style: none;
+
+}
+
+ul.sidebar-nav {
+ position: absolute;
+        left: 50%;
+    padding-left: 0px;
+        margin-right: -50%;
+        transform: translate(-50%, 0%)
+}
+
+.menu {
+	border-left: 0px
+	margin-left: 1.5em;
+	margin: auto auto;
+	    list-style: none;
 }
 table, th, td {
   border: 1px solid black;
@@ -9,3 +24,123 @@ table, th, td {
 h1 a, h2 a {
     color: #FF8833;
 }
+
+.modal-login {
+	width: 320px;
+	z-index: 3; /* Stay on top */
+}
+.modal-login .modal-content {
+	border-radius: 1px;
+}
+.modal-login .modal-header {
+	position: relative;
+	justify-content: center;
+	background: #111;
+}
+.modal-login .modal-body {
+	padding: 30px;
+}
+.modal-login .modal-footer {
+	background: #483D8B;
+}
+.modal-login h4 {
+	text-align: center;
+	font-size: 26px;
+}
+.modal-login label {
+	font-weight: normal;
+	/*font-size: 13px;*/
+}
+.modal-login .form-control, .modal-login .btn {
+	min-height: 38px;
+	border-radius: 2px; 
+}
+.modal-login .hint-text {
+	text-align: center;
+}
+.modal-login .close {
+	position: absolute;
+	top: 15px;
+	right: 15px;
+}
+.modal-login .checkbox-inline {
+	margin-top: 12px;
+}
+.modal-login input[type="checkbox"] {
+	position: relative;
+	top: 1px;
+}
+.modal-login .btn {
+	min-width: 100px;
+	background: #6666ff;
+	border: none;
+	line-height: normal;
+}
+.modal-login .btn:hover, .modal-login .btn:focus {
+	background: #111;
+}
+.modal-login .hint-text a {
+	color: #999;
+}
+
+.modal-content {
+	width: 320px;
+	background: #483D8B;
+}
+
+.col-sm-2 {
+  height: 100%; /* Full-height: remove this if you want "auto" height */
+  width: 20%; /* Set the width of the sidebar */
+  position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+  z-index: 1; /* Stay on top */
+  top: 0; /* Stay at the top */
+  left: 0;
+  background-color: #111; /* Black */
+  overflow-x: hidden; /* Disable horizontal scroll */
+  padding-top: 30px;
+  display: inline-block;
+  padding-right: 0px;
+  padding-left: 0px;
+}
+.sidebar-nav_1{
+	height: 80%;
+    padding: 0;
+    list-style: none;
+}
+.col-sm-10 {
+	margin-left: 18%; 
+	overflow-y:scroll;
+    position:fixed;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+}
+
+#nav {
+	width: 100%;
+}
+.elem {
+  overflow: hidden;
+  background-color: #333;
+}
+
+.elem .a {
+  box-sizing: border-box;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+}
+
+.elem .a:hover {
+  cursor: pointer;
+  background-color: #ddd;
+  color: black;
+}
+
+.elem .a.active {
+  background-color: #4CAF50;
+  color: white;
+}
+
+/*@media screen and (max-width: 600px) */

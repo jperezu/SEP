@@ -1,0 +1,55 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+
+{% if user.groups.all.0.name == 'Production Manager' or  user.groups.all.0.name == 'Services Manager'%}
+
+<h4>Client record</h4>
+{% if archived_clients%}
+<table>
+	<tr>
+		<th> Client </th>
+		<th> Organized Events </th>
+	</tr>
+{% for client in archived_clients %}
+	<tr>
+		<td>{{ client.client_name }}</td>
+		<td>{{ client.organized_events }}</td>
+	</tr>
+{%endfor%}
+</table>
+{%else %}
+<p> No client record to show </p>
+{%endif %}
+<br>
+<h4>Event record</h4>
+{% if archived_events%}
+<table>
+	<tr>
+		<th> Client </th>
+		<th> Type </th>
+		<th> Attendees </th>
+		<th> Budget </th>
+		<th> Dates </th>
+		<th> Description </th>
+	</tr>
+{% for event in archived_events %}
+	<tr>
+		<td>{{ event.client }}</td>
+		<td>{{ event.event_type }}</td>
+		<td>{{ event.attendees }}</td>
+		<td>{{ event.expected_budget }} €</td>
+		<td>{{ event.from_date.year}}/{{event.from_date.month}}/{{event.from_date.day }} - 
+			{{ event.to_date.year}}/{{event.to_date.month}}/{{event.to_date.day }} </td>
+		<td>{{ event.description }}</td>
+	</tr>
+{% endfor %}
+</table>
+
+{%else %}
+<p> No event record to show </p>
+{%endif %}
+{% endif %}
+
+{% endblock %}

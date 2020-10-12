@@ -21,5 +21,6 @@ urlpatterns = [
     path('task/status', views.set_task_status, name='set_task_status'),
     path('event/archive', views.archive_event, name='archive_event'),
     path('login', views.login_view, name='login'),
+    path('history', views.get_history, name='get_history'),
 
 ]
