@@ -32,47 +32,7 @@
     {% endif %}
 {% endif %}
 
-{% if not user.is_authenticated %}
-
-<button href="#myModal" class="trigger-btn" data-toggle="modal">Log In</button>
-
-<!-- Modal HTML -->
-<div id="myModal" class="modal fade">
-	<div class="modal-dialog modal-login">
-		<div class="modal-content">
-			<form action="{% url 'login' %}" method="post">
-				{% csrf_token %}
-				<div class="modal-header">				
-					<h4 class="modal-title">Login</h4>
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				</div>
-				<div class="modal-body">				
-					<div class="form-group">
-						<label>Username</label>
-						<input type="text" class="form-control" name = "user_name" required="required">
-					</div>
-					<div class="form-group">
-						<div class="clearfix">
-							<label>Password</label>
-						</div>
-						
-						<input type="password" class="form-control" name = "user_password" required="required">
-					</div>
-				</div>
-				<div class="modal-footer justify-content-between">
-					<input type="submit" class="btn btn-primary" value="Login">
-				</div>
-			</form>
-		</div>
-	</div>
-</div>     
-{% else %}
-
-
-<form method="post" action="{% url 'logout' %}">
-	  {% csrf_token %}
-	  <button type="submit">Log Out</button>
-	</form>
+{% if user.is_authenticated %}
 
 {% if user.groups.all.0.name == 'CS Team' %}
 
@@ -85,7 +45,7 @@
 			<form action="{% url 'event_form' %}" method="post">
 				{% csrf_token %}
 				<div class="modal-header">				
-					<h4 class="modal-title">New Event Request</h4>
+					<h4 class="modal-title">Event Request</h4>
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				</div>
 				<div class="modal-body">			
@@ -177,11 +137,11 @@
 		<th>{{ event.from_date.year}}/{{event.from_date.month}}/{{event.from_date.day }} - 
 			{{ event.to_date.year}}/{{event.to_date.month}}/{{event.to_date.day }} </th>
 		<th>{{ event.description }}</th>
-	<th><form method="post" action="{% url 'event_cs_accept' %}">
+	<th><form method="post" action="{% url 'event_cs_accept' %}" style = "margin: 0 0 0 0;">
 	{% csrf_token %}
 	<button type="submit" name = "request_pk" value="{{ event.pk }}">Accept</button>
 	</form></th>
-	<th><form method="post" action="{% url 'event_reject' %}">
+	<th><form method="post" action="{% url 'event_reject' %}" style = "margin: 0 0 0 0;">
 	{% csrf_token %}
 	<button type="submit" name = "request_pk" value="{{ event.pk }}">Reject</button>
 	</form></th>
@@ -190,13 +150,14 @@
 </table>
 {% endif %} 
 
+
+<h4>Accepted requests</h4>
 {%if accepted_events %}
-<h2>Accepted requests</h2>
 <table>
 {% for event in accepted_events %}
 	<tr>
 		<th>{{ event.client }}'s {{ event.event_type }}</th>
-	<th><form method="post" action="{% url 'create_event' %}">
+	<th><form method="post" action="{% url 'create_event' %}" style = "margin: 0 0 0 0;">
 	{% csrf_token %}
 	<button type="submit" name = "request_pk" value="{{ event.pk }}">Create Event</button>
 	</form></th>
@@ -207,13 +168,14 @@
 <p> No event requests to show </p>
 {%endif %}
 
+
+<h4>Rejected requests</h4>
 {%if rejected_events %}
-<h2>Rejected requests</h2>
 <table>
 {% for event in rejected_events %}
 	<tr>
 		<th>{{ event.client }}'s {{ event.event_type }}</th>
-	<th><form method="post" action="{% url 'remove_request' %}">
+	<th><form method="post" action="{% url 'remove_request' %}" style = "margin: 0 0 0 0;">
 	{% csrf_token %}
 	<button type="submit" name = "request_pk" value="{{ event.pk }}">Remove Request</button>
 	</form></th>
@@ -240,11 +202,11 @@
 		<th>{{ event.event_type }}</th>
 		<th>{{ event.expected_budget }} €</th>
 		<th>{{ event.description }}</th>
-	<th><form method="post" action="{% url 'event_financial_accept' %}">
+	<th><form method="post" action="{% url 'event_financial_accept' %}" style = "margin: 0 0 0 0;">
 	{% csrf_token %}
 	<button type="submit" name = "request_pk" value="{{ event.pk }}">Accept</button>
 	</form></th>
-	<th><form method="post" action="{% url 'event_reject' %}">
+	<th><form method="post" action="{% url 'event_reject' %}" style = "margin: 0 0 0 0;">
 	{% csrf_token %}
 	<button type="submit" name = "request_pk" value="{{ event.pk }}">Reject</button>
 	</form></th>
@@ -279,11 +241,11 @@
 		<th>{{ event.from_date.month}}/{{event.from_date.day}}/{{event.from_date.year }} - 
 			{{ event.to_date.month}}/{{event.to_date.day}}/{{event.to_date.year }} </th>
 		<th>{{ event.description }}</th>
-	<th><form method="post" action="{% url 'event_admin_accept' %}">
+	<th><form method="post" action="{% url 'event_admin_accept' %}" style = "margin: 0 0 0 0;">
 	{% csrf_token %}
 	<button type="submit" name = "request_pk" value="{{ event.pk }}">Accept</button>
 	</form></th>
-	<th><form method="post" action="{% url 'event_reject' %}">
+	<th><form method="post" action="{% url 'event_reject' %}" style = "margin: 0 0 0 0;">
 	{% csrf_token %}
 	<button type="submit" name = "request_pk" value="{{ event.pk }}">Reject</button>
 	</form></th>
@@ -300,19 +262,19 @@
 {% if user.groups.all.0.name == 'Production Manager' or  user.groups.all.0.name == 'Services Manager'%}
 <p><a href="{% url 'events_progress' %}">Refresh Events</a></p>
 
-<h2>Current Events</h2>
+<h4>Current Events</h4>
 {%if event_pending%}
 <table>
 {% for event in event_pending %}
 	<tr>
-		<th>{{ event.client }}'s {{ event.event_type }}</th>
-		<th>{{ event.status }}</th>
+		<td>{{ event.client }}'s {{ event.event_type }}</td>
+		<td>{{ event.status }}</td>
 		
 		
-		<th><form method="get" action="{% url 'start_event' %}">
+		<td><form method="get" action="{% url 'start_event' %}" style = "margin: 0 0 0 0;">
 		{% csrf_token %}
 		<button type="submit" name = "event_pk" value="{{ event.pk }}">Manage</button>
-		</form></th>
+		</form></td>
 	</tr>
 {% endfor %}
 </table>
@@ -320,17 +282,17 @@
 {%else %}
 <p> No events to show </p>
 {%endif %}
-
-<h2>Finished Events</h2>
+<br>
+<h4>Finished Events</h4>
 {%if event_finished%}
 <table>
 {% for event in event_finished %}
 	<tr>
-		<th>{{ event.client }}'s {{ event.event_type }}</th>
-		<th><form method="get" action="{% url 'archive_event' %}">
+		<td>{{ event.client }}'s {{ event.event_type }}</td>
+		<td><form method="get" action="{% url 'archive_event' %}" style = "margin: 0 0 0 0;">
 		{% csrf_token %}
 		<button type="submit" name = "event_pk" value="{{ event.pk }}">Archive</button>
-		</form></th>
+		</form></td>
 	</tr>
 {% endfor %}
 </table>
@@ -354,35 +316,35 @@
 		</tr>
 			{% for task in tasks %}
 				<tr>
-					<th>{{task.project}}</th>
-					<th>{{task.priority}}</th>
-					<th>{{task.assigner.first_name}}</th>
-					<th>{{task.status}}</th>
-					<th>{{task.description}}</th>
+					<td>{{task.project}}</td>
+					<td>{{task.priority}}</td>
+					<td>{{task.assigner.first_name}}</td>
+					<td>{{task.status}}</td>
+					<td>{{task.description}}</td>
 
 					{% if task.status == 'assigned' %}
-					<th><form method="post" action="{% url 'set_task_status' %}">
+					<td><form method="post" action="{% url 'set_task_status' %}" style = "margin: 0 0 0 0;">
 					{% csrf_token %}
 					<input type="hidden" name="task_status" value="in progress">
 					<button type="submit" name = "task_pk" value="{{ task.pk }}">Start</button>
-					</form></th>
+					</form></td>
 					{% elif task.status == 'in progress' %}
-					<th><form method="post" action="{% url 'set_task_status' %}">
+					<td><form method="post" action="{% url 'set_task_status' %}" style = "margin: 0 0 0 0;">
 					{% csrf_token %}
 					<input type="hidden" name="task_status" value="blocked">
 					<button type="submit" name = "task_pk" value="{{ task.pk }}">Block</button>
-					</form></th>
-					<th><form method="post" action="{% url 'set_task_status' %}">
+					</form></td>
+					<td><form method="post" action="{% url 'set_task_status' %}" style = "margin: 0 0 0 0;">
 					{% csrf_token %}
 					<input type="hidden" name="task_status" value="finished">
-					<button type="submit" name = "task_pk" value="{{ task.pk }}">Finish</button>
-					</form></th>
+					<button type="submit" name = "task_pk" value="{{ task.pk }}" style = "margin: 0 0 0 0;">Finish</button>
+					</form></td>
 					{% elif task.status == 'blocked' %}
-					<th><form method="post" action="{% url 'set_task_status' %}">
+					<td><form method="post" action="{% url 'set_task_status' %}" style = "margin: 0 0 0 0;">
 					{% csrf_token %}
-					<input type="hidden" name="task_status" value="in progress">
+					<input type="hidden" name="task_status" value="in progress" style = "margin: 0 0 0 0;">
 					<button type="submit" name = "task_pk" value="{{ task.pk }}">Resume</button>
-					</form></th>
+					</form></td>
 					{% endif %}
 				</tr>
 			{% endfor %}

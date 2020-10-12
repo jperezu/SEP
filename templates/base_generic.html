@@ -25,47 +25,72 @@
 
 <div class="container-fluid">
 
+
 <div class="row">
   <div class="col-sm-2">
   {% block sidebar %}
-  <ul class="sidebar-nav">
-  </ul>
- 
-  <ul class="sidebar-nav">
+  <ul class="sidebar-nav_1">
    {% if user.is_authenticated %}
-     <li>  <a href="/">Home</a>
-     <li>{{ user.first_name }}</li> 
+     <li>  <a href="/"><u>Home</u></a></li>
+      <li> <br></li>
+     <li><b style= "font-size: 1.25em">{{ user.first_name }}</b></li> 
      <li> <p>{{user.groups.all.0.name}}</p> </li>
    {% endif %} 
   </ul>
- 
+  <ul class="sidebar-nav">
+    {% if not user.is_authenticated %}
+
+<button href="#myModal" class="trigger-btn" data-toggle="modal">Log In</button>
+
+{% else %}
+
+<form method="post" action="{% url 'logout' %}" style = "margin: 0 0 0 0;">
+    {% csrf_token %}
+    <button type="submit">Log Out</button>
+  </form>
+{% endif %}
+  </ul>
+  
 {% endblock %}
   </div>
   <div class="col-sm-10 ">
-  {% block content %}{% endblock %}
-  
-  {% block pagination %}
-    {% if is_paginated %}
-        <div class="pagination">
-            <span class="page-links">
-                {% if page_obj.has_previous %}
-                    <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}">previous</a>
-                {% endif %}
-                <span class="page-current">
-                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-                </span>
-                {% if page_obj.has_next %}
-                    <a href="{{ request.path }}?page={{ page_obj.next_page_number }}">next</a>
-                {% endif %}
-            </span>
-        </div>
-    {% endif %}
-  {% endblock %} 
-  
+  {% block content %}{% endblock %}  
   
   </div>
 </div>
 
 </div>
+
+<!-- Modal HTML -->
+<div id="myModal" class="modal fade">
+  <div class="modal-dialog modal-login">
+    <div class="modal-content">
+      <form action="{% url 'login' %}" method="post" style = "margin: 0 0 0 0;">
+        {% csrf_token %}
+        <div class="modal-header">        
+          <h4 class="modal-title">Login</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        </div>
+        <div class="modal-body">        
+          <div class="form-group">
+            <label>Username</label>
+            <input type="text" class="form-control" name = "user_name" required="required">
+          </div>
+          <div class="form-group">
+            <div class="clearfix">
+              <label>Password</label>
+            </div>
+            
+            <input type="password" class="form-control" name = "user_password" required="required">
+          </div>
+        </div>
+        <div class="modal-footer justify-content-between">
+          <input type="submit" class="btn btn-primary" value="Login">
+        </div>
+      </form>
+    </div>
+  </div>
+</div>     
+
 </body>
 </html>

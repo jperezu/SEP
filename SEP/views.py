@@ -255,15 +255,18 @@ def assign_tasks(request):
 		assigned_user = User.objects.all().filter(pk = request.POST.get('assigned'))[0];
 		event_id = request.POST.get('event_pk')
 		event = Event.objects.get(pk=event_id)
-		new_task = Task(
-			project = event,
-			assigner = request.user,
-			description = request.POST.get('description'),
-			assigned = assigned_user,
-			priority = request.POST.get('priority'),
-			status = "assigned"
-		)
-		new_task.save()
+		duplicated = Task.objects.all().filter(project = event).filter(assigner = request.user).filter(description = request.POST.get('description')).filter(assigned = assigned_user)
+		
+		if (not duplicated) :
+			new_task = Task(
+				project = event,
+				assigner = request.user,
+				description = request.POST.get('description'),
+				assigned = assigned_user,
+				priority = request.POST.get('priority'),
+				status = "assigned"
+			)
+			new_task.save()
 			# redirect to a new URL:
 		tasks = Task.objects.all().filter(project=event)
 		update_event_status(event_id)
