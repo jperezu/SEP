@@ -46,14 +46,17 @@ function myFunction() {
      <li style="padding-left: 35px"> <p>{{user.groups.all.0.name}}</p> </li>
    {% endif %} 
   </ul><br>
-   {% if user.groups.all.0.name == 'Production Manager' or  user.groups.all.0.name == 'Services Manager'%}
-
-
-
-     <div class="elem" id="nav"><div class="a" onclick="location.href='/';">Home</div> </div>
-     <div class="elem" id="nav"><div class="a" onclick="location.href='/history';">History</div> </div></div>
+     <div class="elem" id="nav">
+      {% if user.groups.all.0.name == 'Production Manager' or  user.groups.all.0.name == 'Services Manager'%}
+      <div class="a" onclick="location.href='/';">Home</div> 
+      {%endif%}
+    </div>
+     <div class="elem" id="nav">
+      {% if user.groups.all.0.name == 'Production Manager' or  user.groups.all.0.name == 'Services Manager'%}
+      <div class="a" onclick="location.href='/history';">History</div> 
+    {%endif%}
+    </div></div>
      <a href="javascript:void(0);" class="icon" onclick="myFunction()"></a>
-     {%endif%}
   <ul class="sidebar-nav">
     {% if not user.is_authenticated %}
 

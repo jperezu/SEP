@@ -41,7 +41,7 @@ h1 a, h2 a {
 	padding: 30px;
 }
 .modal-login .modal-footer {
-	background: #483D8B;
+	background: #1a1a1a;
 }
 .modal-login h4 {
 	text-align: center;
@@ -72,12 +72,13 @@ h1 a, h2 a {
 }
 .modal-login .btn {
 	min-width: 100px;
-	background: #6666ff;
+	background: #40334d;
 	border: none;
+	border-radius: 3em;
 	line-height: normal;
 }
 .modal-login .btn:hover, .modal-login .btn:focus {
-	background: #111;
+	background: #1a141f;
 }
 .modal-login .hint-text a {
 	color: #999;
@@ -85,7 +86,7 @@ h1 a, h2 a {
 
 .modal-content {
 	width: 320px;
-	background: #483D8B;
+	background: #1a1a1a;
 }
 
 .col-sm-2 {
