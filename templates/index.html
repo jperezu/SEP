@@ -35,8 +35,8 @@
 {% if user.is_authenticated %}
 
 {% if user.groups.all.0.name == 'Platform Administrator' %}
-	<button type="button">
-	    <a href="/admin">Manage Server and Database</a>
+	<button onclick="location.href='/admin';" type="button" style = "background: #111;">
+	  Manage Server and Database
 	</button>
 
 
