@@ -1,12 +1,8 @@
 import datetime
 from django.test import TestCase
 from django.db import models
-from SEP.models import Client
-from SEP.models import Event
-from SEP.models import RequestEvent
-from SEP.models import RequestRecruitment
-from SEP.models import RequestBudget
-from SEP.models import Task
+from SEP.models import Client, Event, RequestEvent, RequestRecruitment, RequestBudget, Task
+
 #from django import models
 
 # Create your tests here.
@@ -87,7 +83,7 @@ class RequestRecruitmentTest(TestCase):
 
     def setUpTestData(cls):
         # Set up non-modified objects used by all test method
-        RequestRecruitment.objects.create(type ='Co-work with Subteam', department ='Subteam', experience ='Professional', job ='DJ', description ='Customer wants marshmellow for this event')    
+        RequestRecruitment.objects.create(type ='Co-work with Subteam', department ='Subteam', experience ='Professional', job ='DJ', description ='Customer wants marshmellow for this event', status ='on going')    
 
 
     def test_description_max_length(self):
@@ -110,7 +106,7 @@ class RequestBudgetTest(TestCase):
         client = Client.objects.get(id=1)
         Event.objects.create(client=client, event_type ='Charity Party', description ='It will be a fun party', attendees ='50', expected_budget ='5000', from_date ='2020-10-10', to_date ='2020-10-13', decorations ='ballons', film_and_photos ='10 mins video, 1000 photos', posters_art ='10 posters', food_drinks ='Wine and cheese', music ='Classic and american pop songs', computers ='3 computers', other ='Consult with every details with the customer', status = 'suspend')
         event = Event.objects.get(id=1)
-        RequestBudget.objects.create(project=event, department ='Service Team' , budget = '500', description='more balloons')
+        RequestBudget.objects.create(project=event, department ='Service Team' , budget = '500', description='more balloons', status = 'on going')
     
     def test_decorations_max_length(self):
         budget = RequestBudget.objects.get(id=1)
