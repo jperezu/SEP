@@ -34,6 +34,14 @@
 
 {% if user.is_authenticated %}
 
+{% if user.groups.all.0.name == 'Platform Administrator' %}
+	<button type="button">
+	    <a href="/admin">Manage Server and Database</a>
+	</button>
+
+
+{% endif %} 
+
 {% if user.groups.all.0.name == 'CS Team' %}
 
 	<button href="#eventModal" class="trigger-btn" data-toggle="modal">Add event request</button>
