@@ -1,10 +1,11 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
+
+{% if not user.is_authenticated %}
 <h1>SEP</h1>
-
 <p>Welcome to the <em>Swedish Event Planning</em> organization Portal.</p>
-
+{% endif %}
 
 <!-- You have visited this page {{ num_visits }} times. -->
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -49,7 +50,7 @@
 {% endif %} 
 
 {% if user.groups.all.0.name == 'CS Manager' %}
-<p><a href="{% url 'eventreq_list' %}">Refresh</a></p>
+<!--<p><a href="{% url 'eventreq_list' %}">Refresh</a></p>-->
 {%if event_requests %}
 <table>
 	<tr>
@@ -118,7 +119,7 @@
 {%endif %}
 
 {% if user.groups.all.0.name == 'Financial Manager' %}
-<p><a href="{% url 'eventcs_list' %}">Refresh</a></p>
+<!--<p><a href="{% url 'eventcs_list' %}">Refresh</a></p>-->
 <h4>Event requests</h4>
 {%if event_cs_requests %}
 <table>
@@ -203,7 +204,7 @@
 
 
 {% if user.groups.all.0.name == 'HR Manager' %}
-<p><a href="{% url 'hr_list' %}">Refresh</a></p>
+<!--<p><a href="{% url 'hr_list' %}">Refresh</a></p>-->
 
 <h4>Recruitment requests</h4>
 
@@ -255,7 +256,7 @@
 
 
 {% if user.groups.all.0.name == 'Administration Manager' %}
-<p><a href="{% url 'eventfin_list' %}">Refresh</a></p>
+<!--<p><a href="{% url 'eventfin_list' %}">Refresh</a></p>-->
 
 {%if event_fin_requests%}
 <table>
@@ -295,7 +296,7 @@
 
 
 {% if user.groups.all.0.name == 'Production Manager' or  user.groups.all.0.name == 'Services Manager'%}
-<p><a href="{% url 'events_progress' %}">Refresh</a></p>
+<!--<p><a href="{% url 'events_progress' %}">Refresh</a></p>-->
 
 <h4>Current Events</h4>
 {%if event_pending%}
@@ -389,7 +390,7 @@
 {% endif %}
 
 {% if user.groups.all.0.name == 'Chef' or user.groups.all.0.name == 'Computer' or user.groups.all.0.name == 'Decoration' or user.groups.all.0.name == 'Graphic Design' or user.groups.all.0.name == 'Music' or user.groups.all.0.name == 'Photography' or user.groups.all.0.name == 'Waiter'%}
-	<p><a href="{% url 'get_tasks' %}">Refresh</a></p>
+	<!--<p><a href="{% url 'get_tasks' %}">Refresh</a></p>-->
 	{% if tasks %}
 	<table>
 		<tr>
