@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 from django.http import HttpResponse,HttpResponseRedirect
 from django.contrib.auth.models import User
-from .models import Client, Event, RequestEvent, Task
+from .models import Client, Event, RequestEvent, Task, RequestRecruitment, RequestBudget
 from .forms import event_form, task_form
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
@@ -200,10 +200,14 @@ def show_events(request):
 
 	event_pending = Event.objects.exclude(status="finished").exclude(status="archived")
 	event_finished = Event.objects.filter(status="finished")
+	b_request = RequestBudget.objects.all();
+	r_request = RequestRecruitment.objects.all();
+
 	return render(
 		request,
 		'index.html',
-		context={'event_pending': event_pending, 'event_finished': event_finished},
+		context={'event_pending': event_pending, 'event_finished': event_finished,
+		 'b_request' : b_request, 'r_request' : r_request},
 		)
 
 def update_event_status(event_id):
@@ -336,3 +340,37 @@ def get_history(request):
 		'recordhistory.html',
 		context={'archived_events': archived_events, 'archived_clients' : archived_clients},
 	)
+def add_request(request):
+	request_type = request.POST.get('request_type')
+	event_id = request.POST.get('event_pk')
+	event = Event.objects.get(pk=event_id)
+
+	if (request_type == "budg"):
+		duplicated = RequestBudget.objects.all().filter(project = event).filter(department = request.POST.get('department'))
+		if (not duplicated) :
+			req = RequestBudget(
+				project = event,
+				department = request.POST.get('department'),
+				budget = request.POST.get('budget'),
+				description = request.POST.get('description'),
+				status = "requested"
+			)
+			req.save()
+	elif(request_type == "recruit"):
+		duplicated = RequestRecruitment.objects.all().filter(type = request.POST.get('contract')).filter(department = request.POST.get('department')).filter(job = request.POST.get('job'))
+		if (not duplicated) :
+			req = RequestRecruitment(
+				type = request.POST.get('contract'),
+				department = request.POST.get('department'),
+				experience = request.POST.get('experience'),
+				job = request.POST.get('job'),
+				description = request.POST.get('description'),
+				status = "requested"
+			)
+			req.save()
+	else :
+		storage = messages.get_messages(request)
+		storage.used = True
+		messages.info(request, "Error creating request")
+		#HttpResponseRedirect("/")
+	return show_events(request)

@@ -116,7 +116,7 @@ function myFunction() {
 <!-- Modal HTML -->
 <div id="eventModal" class="modal fade">
   <div class="modal-dialog modal-login">
-    <div class="modal-content"style="width: 150%; position: absolute; left: 50%;transform: translate(-50%, 0%);">
+    <div class="modal-content" id="modal_event">
       <form action="{% url 'event_form' %}" method="post">
         {% csrf_token %}
         <div class="modal-header">        

@@ -224,7 +224,45 @@
 {%else %}
 <p> No events to show </p>
 {%endif %}
+<hr style="height:0.1px;border-width:0;color:white;background-color:white">
+<h4>Requests</h4>
 
+<table>
+	 <tr>
+	  <th colspan="3">Budget</th>
+	 </tr>
+{%if b_request%}
+{% for request in b_request %}
+	<tr>
+		<td>{{ request.project }}</td>
+		<td>{{ request.department }}</td>
+		<td>{{ request.status }}</td>
+	</tr>
+{% endfor %}
+{%else %}
+	<tr>
+		<td colspan="3">No requests to show </td>
+	</tr>
+{%endif %}
+
+	 <tr>
+	  <th colspan="3">Recruitment</th>
+	 </tr>
+{%if r_request%}
+{% for request in r_request %}
+	<tr>
+		<td>{{ request.job }}</td>
+		<td>{{ request.department }}</td>
+		<td>{{ request.status }}</td>
+	</tr>
+{% endfor %}
+{%else %}
+	<tr>
+		<td colspan="3">No requests to show </td>
+	</tr>
+{%endif %}
+</table>
+<br>
 {% endif %}
 
 {% if user.groups.all.0.name == 'Chef' or user.groups.all.0.name == 'Computer' or user.groups.all.0.name == 'Decoration' or user.groups.all.0.name == 'Graphic Design' or user.groups.all.0.name == 'Music' or user.groups.all.0.name == 'Photography' or user.groups.all.0.name == 'Waiter'%}

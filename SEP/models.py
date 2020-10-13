@@ -56,6 +56,7 @@ class RequestRecruitment(models.Model):
     experience = models.CharField(max_length=50)
     job = models.CharField(max_length=50)
     description = models.CharField(max_length=500)
+    status = models.CharField(max_length=20)
 
     def __str__(self):
         return  '%s\' for %s' % (self.job, self.department)
@@ -65,6 +66,7 @@ class RequestBudget(models.Model):
     department = models.CharField(max_length=20)
     budget = models.IntegerField(default=0)
     description = models.CharField(max_length=500)
+    status = models.CharField(max_length=20)
 
     def __str__(self):
         return  '%s budget request' % self.department

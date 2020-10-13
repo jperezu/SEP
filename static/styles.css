@@ -89,6 +89,23 @@ h1 a, h2 a {
 	background: #1a1a1a;
 }
 
+
+@media (max-width: 480px) {
+	#modal_event {
+    max-width: 100% !important;
+    position: absolute; 
+	left: 50%;
+	transform: translate(-50%, 0%);
+}
+	}
+}	
+#modal_event{
+	width: 200%; 
+	position: absolute; 
+	left: 50%;
+	transform: translate(-50%, 0%);
+}
+
 .col-sm-2 {
   height: 100%; /* Full-height: remove this if you want "auto" height */
   width: 20%; /* Set the width of the sidebar */
@@ -143,5 +160,6 @@ h1 a, h2 a {
   background-color: #4CAF50;
   color: white;
 }
+
 
 /*@media screen and (max-width: 600px) */

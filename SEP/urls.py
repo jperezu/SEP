@@ -22,5 +22,5 @@ urlpatterns = [
     path('event/archive', views.archive_event, name='archive_event'),
     path('login', views.login_view, name='login'),
     path('history', views.get_history, name='get_history'),
-
+	path('addrequest', views.add_request, name='add_request'),
 ]
