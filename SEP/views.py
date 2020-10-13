@@ -393,11 +393,12 @@ def update_budrequest(request):
 	bud_req = RequestBudget.objects.get(pk=req_id)
 
 	bud_req.status = request_status
+	bud_req.save()
 
 	if (bud_req.status == "agreed") :
-		bud_req.project.budget = requested_budget
-
-	bud_req.save()
+		event = Event.objects.get(pk = bud_req.project.pk)
+		event.expected_budget = requested_budget
+		event.save()
 
 	return HttpResponseRedirect("/")
 
