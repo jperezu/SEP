@@ -17,6 +17,8 @@ def index(request):
 		return get_pending_events(request)
 	elif (request.user.groups.filter(name='Financial Manager').exists()):	
 		return get_cs_accepted_events(request)
+	elif (request.user.groups.filter(name='HR Manager').exists()):	
+		return recruitment_list(request)
 	elif (request.user.groups.filter(name='Administration Manager').exists()):
 		return get_fin_accepted_events(request)
 	elif (request.user.groups.filter(name='Production Manager').exists() or
@@ -122,12 +124,20 @@ def remove_req_event(request):
 
 def get_cs_accepted_events(request):
 	event_cs_requests = RequestEvent.objects.filter(status = "cs_accepted")
-	
+	b_request = RequestBudget.objects.all();
 	return render(
 		request,
 		'index.html',
-		context={'event_cs_requests': event_cs_requests},
+		context={'event_cs_requests': event_cs_requests, 'b_request' : b_request},
 	)
+def recruitment_list(request):
+	r_request = RequestRecruitment.objects.all();
+	return render(
+		request,
+		'index.html',
+		context={'r_request' : r_request},
+	)
+
 def pending_event_financial_accept(request):
 	if request.method == 'POST':
 		# create a form instance and populate it with data from the request:
@@ -374,3 +384,47 @@ def add_request(request):
 		messages.info(request, "Error creating request")
 		#HttpResponseRedirect("/")
 	return show_events(request)
+
+def update_budrequest(request):
+	req_id = request.POST.get('request_pk')
+	request_status = request.POST.get('request_status')
+	requested_budget = request.POST.get('requested_budget')
+
+	bud_req = RequestBudget.objects.get(pk=req_id)
+
+	bud_req.status = request_status
+
+	if (bud_req.status == "agreed") :
+		bud_req.project.budget = requested_budget
+
+	bud_req.save()
+
+	return HttpResponseRedirect("/")
+
+def remove_budrequest(request):
+	req_id = request.POST.get('request_pk')
+	bud_req = RequestBudget.objects.get(pk=req_id)
+
+	bud_req.delete()
+
+	return HttpResponseRedirect("/")
+
+def update_recrequest(request):
+	req_id = request.POST.get('request_pk')
+	request_status = request.POST.get('request_status')
+
+	rec_req = RequestRecruitment.objects.get(pk=req_id)
+
+	rec_req.status = request_status
+
+	rec_req.save()
+
+	return HttpResponseRedirect("/")
+
+def remove_recrequest(request):
+	req_id = request.POST.get('request_pk')
+	rec_req = RequestRecruitment.objects.get(pk=req_id)
+
+	rec_req.delete()
+
+	return HttpResponseRedirect("/")

@@ -9,6 +9,7 @@ urlpatterns = [
     path('eventreq/csaccept', views.pending_event_cs_accept, name='event_cs_accept'),
     path('eventreq/reject', views.pending_event_reject, name='event_reject'),
     path('eventreqbud', views.get_cs_accepted_events, name='eventcs_list'),
+    path('eventreqrec', views.recruitment_list, name='hr_list'),
     path('eventreq/financialaccept', views.pending_event_financial_accept, name='event_financial_accept'),
     path('eventreqfin', views.get_fin_accepted_events, name='eventfin_list'),
     path('eventreq/adminaccept', views.pending_event_admin_accept, name='event_admin_accept'),
@@ -23,4 +24,8 @@ urlpatterns = [
     path('login', views.login_view, name='login'),
     path('history', views.get_history, name='get_history'),
 	path('addrequest', views.add_request, name='add_request'),
+	path('budget/update', views.update_budrequest, name='update_budrequest'),
+	path('budget/remove', views.remove_budrequest, name='remove_budrequest'),
+	path('recruitment/update', views.update_recrequest, name='update_recrequest'),
+	path('recruitment/remove', views.remove_recrequest, name='remove_recrequest'),
 ]

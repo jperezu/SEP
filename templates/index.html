@@ -41,7 +41,7 @@
 {% endif %} 
 
 {% if user.groups.all.0.name == 'CS Manager' %}
-<p><a href="{% url 'eventreq_list' %}">Refresh Event Requests</a></p>
+<p><a href="{% url 'eventreq_list' %}">Refresh</a></p>
 {%if event_requests %}
 <table>
 	<tr>
@@ -110,8 +110,8 @@
 {%endif %}
 
 {% if user.groups.all.0.name == 'Financial Manager' %}
-<p><a href="{% url 'eventcs_list' %}">Refresh Event Requests</a></p>
-
+<p><a href="{% url 'eventcs_list' %}">Refresh</a></p>
+<h4>Event requests</h4>
 {%if event_cs_requests %}
 <table>
 	<tr>
@@ -141,10 +141,113 @@
 {%else %}
 <p> No event requests to show </p>
 {%endif %}
+
+<h4>Budget requests</h4>
+
+{%if b_request%}
+<table>
+		<tr>
+			<th> Event </th>
+			<th> Department </th>
+			<th> Budget </th>
+			<th> Description </th>
+			<th> Status </th>
+		</tr>
+{% for request in b_request %}
+	<tr>
+		<td>{{ request.project }}</td>
+		<td>{{ request.department }}</td>
+		<td>{{ request.budget }}€</td>
+		<td>{{ request.description }}</td>
+		<td>{{ request.status }}</td>
+		{% if request.status == 'requested' %}
+			<td><form method="post" action="{% url 'update_budrequest' %}" style = "margin: 0 0 0 0;">
+			{% csrf_token %}
+			<input type="hidden" name="request_status" value="accepted">
+			<button type="submit" name = "request_pk" value="{{ request.pk }}">Accept</button>
+			</form></td>
+			<td><form method="post" action="{% url 'update_budrequest' %}" style = "margin: 0 0 0 0;">
+			{% csrf_token %}
+			<input type="hidden" name="request_status" value="rejected">
+			<button type="submit" name = "request_pk" value="{{ request.pk }}">Reject</button>
+			</form></td>
+		{% elif request.status == 'accepted' %}
+			<td><form method="post" action="{% url 'update_budrequest' %}" style = "margin: 0 0 0 0;">
+			{% csrf_token %}
+			<input type="hidden" name="requested_budget" value="{{ request.budget }}">
+			<input type="hidden" name="request_status" value="agreed">
+			<button type="submit" name = "request_pk" value="{{ request.pk }}">Agreed</button>
+			</form></td>
+			<td><form method="post" action="{% url 'update_budrequest' %}" style = "margin: 0 0 0 0;">
+			{% csrf_token %}
+			<input type="hidden" name="request_status" value="disagreed">
+			<button type="submit" name = "request_pk" value="{{ request.pk }}">Disagreed</button>
+			</form></td>
+		{%endif%}
+	</tr>
+{% endfor %}
+</table>
+{%else %}
+		<td colspan="3">No budget requests to show </td>
+{%endif %}
+<br>
 {% endif %} 
 
+
+{% if user.groups.all.0.name == 'HR Manager' %}
+<p><a href="{% url 'hr_list' %}">Refresh</a></p>
+
+<h4>Recruitment requests</h4>
+
+{%if r_request%}
+<table>
+		<tr>
+			<th> Department </th>
+			<th> Job </th>
+			<th> Contract </th>
+			<th> Experience </th>
+			<th> Description </th>
+			<th> Status </th>
+		</tr>
+{% for request in r_request %}
+	<tr>
+		<td>{{ request.department }}</td>
+		<td>{{ request.job }}</td>
+		<td>{{ request.type }}</td>
+		<td>{{ request.experience }}</td>
+		<td>{{ request.description }}</td>
+		<td>{{ request.status }}</td>
+		{% if request.status == 'requested' %}
+			<td><form method="post" action="{% url 'update_recrequest' %}" style = "margin: 0 0 0 0;">
+			{% csrf_token %}
+			<input type="hidden" name="request_status" value="accepted">
+			<button type="submit" name = "request_pk" value="{{ request.pk }}">Accept</button>
+			</form></td>
+			<td><form method="post" action="{% url 'update_recrequest' %}" style = "margin: 0 0 0 0;">
+			{% csrf_token %}
+			<input type="hidden" name="request_status" value="rejected">
+			<button type="submit" name = "request_pk" value="{{ request.pk }}">Reject</button>
+			</form></td>
+		{% elif request.status == 'accepted' %}
+			<td><form method="post" action="{% url 'update_recrequest' %}" style = "margin: 0 0 0 0;">
+			{% csrf_token %}
+			<input type="hidden" name="request_status" value="hired">
+			<button type="submit" name = "request_pk" value="{{ request.pk }}">Hired</button>
+			</form></td>
+		{%endif%}
+	</tr>
+{% endfor %}
+</table>
+{%else %}
+		<td colspan="3">No recruitment requests to show </td>
+{%endif %}
+<br>
+
+{% endif %} 
+
+
 {% if user.groups.all.0.name == 'Administration Manager' %}
-<p><a href="{% url 'eventfin_list' %}">Refresh Event Requests</a></p>
+<p><a href="{% url 'eventfin_list' %}">Refresh</a></p>
 
 {%if event_fin_requests%}
 <table>
@@ -184,7 +287,7 @@
 
 
 {% if user.groups.all.0.name == 'Production Manager' or  user.groups.all.0.name == 'Services Manager'%}
-<p><a href="{% url 'events_progress' %}">Refresh Events</a></p>
+<p><a href="{% url 'events_progress' %}">Refresh</a></p>
 
 <h4>Current Events</h4>
 {%if event_pending%}
@@ -237,6 +340,12 @@
 		<td>{{ request.project }}</td>
 		<td>{{ request.department }}</td>
 		<td>{{ request.status }}</td>
+		{% if request.status == 'agreed' or request.status == 'disagreed' or request.status == 'rejected'%}
+			<td><form method="post" action="{% url 'remove_budrequest' %}" style = "margin: 0 0 0 0;">
+			{% csrf_token %}
+			<button type="submit" name = "request_pk" value="{{ request.pk }}">Remove</button>
+			</form></td>
+		{%endif%}
 	</tr>
 {% endfor %}
 {%else %}
@@ -254,6 +363,12 @@
 		<td>{{ request.job }}</td>
 		<td>{{ request.department }}</td>
 		<td>{{ request.status }}</td>
+		{% if request.status == 'hired' or request.status == 'rejected'%}
+			<td><form method="post" action="{% url 'remove_recrequest' %}" style = "margin: 0 0 0 0;">
+			{% csrf_token %}
+			<button type="submit" name = "request_pk" value="{{ request.pk }}">Remove</button>
+			</form></td>
+		{%endif%}
 	</tr>
 {% endfor %}
 {%else %}
@@ -266,7 +381,7 @@
 {% endif %}
 
 {% if user.groups.all.0.name == 'Chef' or user.groups.all.0.name == 'Computer' or user.groups.all.0.name == 'Decoration' or user.groups.all.0.name == 'Graphic Design' or user.groups.all.0.name == 'Music' or user.groups.all.0.name == 'Photography' or user.groups.all.0.name == 'Waiter'%}
-	<p><a href="{% url 'get_tasks' %}">Refresh Tasks</a></p>
+	<p><a href="{% url 'get_tasks' %}">Refresh</a></p>
 	{% if tasks %}
 	<table>
 		<tr>
