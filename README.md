@@ -94,4 +94,4 @@ To run the test, run the following command:
 ```bash
 python manage.py test
 ```
-The purpose of this test is to find differences between the system and its models by executing the system with sample input data sets. During this unit testing, we compared the object design model with each object and subsystem. The goal of testing is to discover as many faults as possible such that we can be repaired before the delivery of the system.
+The purpose of this test is to find differences between the system and its models by executing the system with sample input data sets. During this testing, it is possible to compare the object design model with each object and subsystem. The goal of the testing is to discover as many faults as possible such that we can be repaired before the delivery of the system.
