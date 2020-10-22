@@ -12,7 +12,7 @@ To start the server for later executions (without reintalling the dependencies),
 python manage.py runserver
 ```
 
-The script <i>sep_server.py</i> installs the needed requirements, checks the database structure, populates it, and runs the application server <i>(Assuming python already installed, else go to https://www.python.org/downloads/)</i>
+The script <i>sep_server.py</i> installs the needed requirements, checks the database structure, populates it, and runs the application server <i>(Assuming python 3.6 or greater already installed, else go to https://www.python.org/downloads/)</i>
 
 <b>(The server needs to remain opened while the application is running to work)</b>
 
