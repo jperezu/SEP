@@ -1,7 +1,10 @@
 import datetime
-from django.test import TestCase
+from django.test import TestCase, TransactionTestCase, Client
 from django.db import models
 from SEP.models import Client, Event, RequestEvent, RequestRecruitment, RequestBudget, Task
+from django.contrib.auth import get_user_model
+from django.contrib.auth.models import User
+from django.contrib.auth.backends import ModelBackend
 
 #from django import models
 
@@ -122,3 +125,34 @@ class RequestBudgetTest(TestCase):
         expected_object_name ='%s budget request' % (budget.department)
         self.assertEquals(expected_object_name, str(budget))
 
+class TaskTest(TestCase):
+    @classmethod
+    
+    def setUpTestData(cls):
+        # Set up non-modified objects used by all test method
+        Client.objects.create(client_name ='Big Boss', organized_events ='10')
+        client = Client.objects.get(id=1)
+        Event.objects.create(client=client, event_type ='Charity Party', description ='It will be a fun party', attendees ='50', expected_budget ='5000', from_date ='2020-10-10', to_date ='2020-10-13', decorations ='ballons', film_and_photos ='10 mins video, 1000 photos', posters_art ='10 posters', food_drinks ='Wine and cheese', music ='Classic and american pop songs', computers ='3 computers', other ='Consult with every details with the customer', status = 'suspend')
+        event = Event.objects.get(id=1)
+        User.objects.create(username='admin', password='pass@123', email='admin@admin.com')
+        assigned = User.objects.get(id=1)
+        User.objects.create(username='admin1', password='pass@123', email='admin1@admin.com')
+        assigner = User.objects.get(id=1)
+        Task.objects.create(project=event, description='500 dishes of stake', assigned =assigned, assigner =assigner , priority = 'High', status ='on going')
+    
+    def test_decorations_max_length(self):
+        task = Task.objects.get(id=1)
+        max_length = task._meta.get_field('status').max_length
+        self.assertEquals(max_length, 20)
+
+    def test_object_name_is_department(self):
+        Client.objects.create(client_name ='Big Boss', organized_events ='10')
+        client = Client.objects.get(id=1)
+        Event.objects.create(client=client, event_type ='Charity Party', description ='It will be a fun party', attendees ='50', expected_budget ='5000', from_date ='2020-10-10', to_date ='2020-10-13', decorations ='ballons', film_and_photos ='10 mins video, 1000 photos', posters_art ='10 posters', food_drinks ='Wine and cheese', music ='Classic and american pop songs', computers ='3 computers', other ='Consult with every details with the customer', status = 'suspend')
+        event = Event.objects.get(id=1)
+        task = Task.objects.get(id=1)
+        expected_object_name ='Task for %s' % task.assigned.first_name
+        self.assertEquals(expected_object_name, str(task))
+
+
+   
