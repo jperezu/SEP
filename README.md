@@ -1,10 +1,15 @@
 ## SEP application
 <p>The SEP platform is currently running on an online server. <br>
 To access the service go to https://id2207-sep.herokuapp.com/ <br>
-To use the local version run the next command from root directory of the SEP project:</p>
+To use the local version run the next command from root directory of the SEP project just the fist time:</p>
 
 ```bash
 python sep_server.py
+```
+
+To start the server for later executions (without reintalling the dependencies), run the following command:
+```bash
+python manage.py runserver
 ```
 
 The script <i>sep_server.py</i> installs the needed requirements, checks the database structure, populates it, and runs the application server <i>(Assuming python already installed, else go to https://www.python.org/downloads/)</i>
@@ -81,3 +86,12 @@ The script <i>sep_server.py</i> installs the needed requirements, checks the dat
 	--------------HR Manager---------------
 	simon@sep.se	id2207sep   	Simon
 	
+-------------------------------------------------------------------------------
+
+## Testing
+
+To run the test, run the following command:
+```bash
+python manage.py test
+```
+The purpose of this test is to find differences between the system and its models by executing the system with sample input data sets. During this testing, it is possible to compare the object design model with each object and subsystem. The goal of the testing is to discover as many faults as possible such that we can be repaired before the delivery of the system.
